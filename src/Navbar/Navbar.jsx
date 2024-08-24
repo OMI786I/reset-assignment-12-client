@@ -4,22 +4,22 @@ const Navbar = () => {
   const navLink = (
     <div className="flex-row md:flex-col gap-6  ">
       <NavLink to="/">
-        <button className="hover:border-red-500 border-transparent border-b-2 duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
           Home
         </button>
       </NavLink>
       <NavLink to="/donationRequests">
-        <button className="hover:border-red-500 border-transparent border-b-2 duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
           Donation requests
         </button>
       </NavLink>
       <NavLink to="/blog">
-        <button className="hover:border-red-500 border-transparent border-b-2 duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
           Blog
         </button>
       </NavLink>
       <NavLink to="/funding">
-        <button className="hover:border-red-500 border-transparent border-b-2 duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
           Funding
         </button>
       </NavLink>
@@ -66,8 +66,8 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLink}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Login</a>
-          <a className="btn">Register</a>
+          <a className="btn btn-neutral">Login</a>
+          <a className="btn btn-neutral">Register</a>
         </div>
       </div>
     </div>
