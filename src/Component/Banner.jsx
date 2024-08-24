@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -22,9 +23,11 @@ const Banner = () => {
               <button className="btn btn-error text-white">
                 Join as a donor
               </button>
-              <button className="btn btn-outline text-white">
-                Search donor
-              </button>
+              <Link to={"searchPage"}>
+                <button className="btn btn-outline text-white">
+                  Search donor
+                </button>
+              </Link>
             </div>
           </div>
         </div>
