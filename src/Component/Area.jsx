@@ -7,7 +7,7 @@ const Area = () => {
   const [upazilla, setUpazilla] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [filteredUpazilla, setFilteredUpazilla] = useState([]);
-
+  console.log(filteredUpazilla);
   useEffect(() => {
     setLoading(true);
 
@@ -38,7 +38,44 @@ const Area = () => {
       });
   }, []);
 
-  return <div></div>;
+  useEffect(() => {
+    if (selectedDistrict) {
+      const filtered = upazilla.filter(
+        (data) => data.district_id === selectedDistrict
+      );
+      setFilteredUpazilla(filtered);
+    } else {
+      setFilteredUpazilla([]);
+    }
+  }, [selectedDistrict, upazilla]);
+
+  return (
+    <div>
+      <label htmlFor="district">district:</label>
+      <select
+        id="district"
+        value={selectedDistrict}
+        onChange={(e) => setSelectedDistrict(e.target.value)}
+      >
+        <option value="">Select district</option>
+        {district.map((district) => (
+          <option key={district.id} value={district.id}>
+            {district.name}
+          </option>
+        ))}
+      </select>
+
+      <label htmlFor="upazilla">upazilla:</label>
+      <select id="upazilla" disabled={!selectedDistrict}>
+        <option value="">Select upazilla</option>
+        {filteredUpazilla.map((upazilla) => (
+          <option key={upazilla.id} value={upazilla.id}>
+            {upazilla.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 };
 
 export default Area;
