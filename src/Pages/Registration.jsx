@@ -4,7 +4,8 @@ import useLocationSelector from "../CustomHook/useLocationSelector";
 import { useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 const Registration = () => {
   const [showPassWord, setShowPassWord] = useState(false);
   const [showPassWord2, setShowPassWord2] = useState(false);
@@ -29,6 +30,18 @@ const Registration = () => {
   const onSubmit = (data) => {
     console.log(data);
     delete data.confirmPassword;
+    axios
+      .post("http://localhost:5000/donor", data)
+      .then((response) => {
+        if (response.data.insertedId) {
+          toast.success("You have successfully added");
+        }
+        console.log(response);
+      })
+      .catch((error) => {
+        toast.error("There was an error adding the data");
+        console.log(error);
+      });
   };
 
   return (
@@ -218,10 +231,11 @@ const Registration = () => {
             </div>
 
             <div className="form-control w-full my-6">
+              <label>image url</label>
               <input
                 {...register("image", { required: true })}
-                type="file"
-                className="file-input w-full max-w-xs"
+                type="text"
+                className=" input input-bordered"
               />
               {errors.image && (
                 <p className="text-red-600">image is required</p>
