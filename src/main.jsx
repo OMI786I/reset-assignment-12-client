@@ -7,6 +7,7 @@ import Root from "./Root/Root.jsx";
 import Home from "./Pages/Home.jsx";
 import SearchDonor from "./Pages/SearchDonor.jsx";
 import Request from "./Pages/Request.jsx";
+import Registration from "./Pages/Registration.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/donationRequests",
         element: <Request></Request>,
+      },
+      {
+        path: "/registration",
+        element: <Registration></Registration>,
       },
     ],
   },
