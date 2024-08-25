@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./Root/Root.jsx";
 import Home from "./Pages/Home.jsx";
 import SearchDonor from "./Pages/SearchDonor.jsx";
+import Request from "./Pages/Request.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/searchPage",
         element: <SearchDonor></SearchDonor>,
+      },
+      {
+        path: "/donationRequests",
+        element: <Request></Request>,
       },
     ],
   },

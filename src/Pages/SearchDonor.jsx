@@ -78,8 +78,8 @@ const SearchDonor = () => {
         </select>
         {errors.name && <span className="text-red-600">Name is required</span>}
       </div>
-      <div className="form-control mt-6">
-        <button className="btn btn-primary">Signup</button>
+      <div className="form-control mt-6 max-w-md">
+        <button className="btn btn-neutral">Search</button>
       </div>
     </form>
   );
