@@ -14,6 +14,8 @@ const Registration = () => {
     formState: { errors },
     watch,
   } = useForm();
+  const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+  const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
   const { loading, districts, filteredUpazillas, filterUpazillas } =
     useLocationSelector();
@@ -37,7 +39,7 @@ const Registration = () => {
         </div>
 
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl md:w-1/2">
-          <h1 className="font-bold text-3xl text-center">Signup</h1>
+          <h1 className="font-bold text-3xl text-center">Registration</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
@@ -186,52 +188,51 @@ const Registration = () => {
               <label className="label">
                 <span className="label-text">Confirm Password</span>
               </label>
-              <input
-                type={showPassWord2 ? "text" : "password"}
-                {...register("confirmPassword", {
-                  required: true,
-                  validate: (value) =>
-                    value === password || "Passwords do not match",
-                })}
-                placeholder="Confirm Password"
-                className="input input-bordered"
-                name="confirmPassword"
-              />
-              <span
-                className="hover:cursor-pointer"
-                onClick={() => setShowPassWord2(!showPassWord2)}
-              >
-                {showPassWord2 ? (
-                  <FaRegEye></FaRegEye>
-                ) : (
-                  <FaRegEyeSlash></FaRegEyeSlash>
-                )}
-              </span>
+              <div className="flex items-center">
+                <input
+                  type={showPassWord2 ? "text" : "password"}
+                  {...register("confirmPassword", {
+                    required: true,
+                    validate: (value) =>
+                      value === password || "Passwords do not match",
+                  })}
+                  placeholder="Confirm Password"
+                  className="input input-bordered"
+                  name="confirmPassword"
+                />
+                <span
+                  className="hover:cursor-pointer"
+                  onClick={() => setShowPassWord2(!showPassWord2)}
+                >
+                  {showPassWord2 ? (
+                    <FaRegEye></FaRegEye>
+                  ) : (
+                    <FaRegEyeSlash></FaRegEyeSlash>
+                  )}
+                </span>
+              </div>
+
               {errors.confirmPassword && (
                 <p className="text-red-600">{errors.confirmPassword.message}</p>
               )}
             </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo URL</span>
-              </label>
+            <div className="form-control w-full my-6">
               <input
-                type="text"
-                {...register("photoURL", { required: true })}
-                placeholder="Photo URL"
-                className="input input-bordered"
+                {...register("image", { required: true })}
+                type="file"
+                className="file-input w-full max-w-xs"
               />
-              {errors.photoURL && (
-                <span className="text-red-600">Photo URL is required</span>
+              {errors.image && (
+                <p className="text-red-600">image is required</p>
               )}
             </div>
 
             <div className="form-control mt-6">
               <input
-                className="btn btn-primary"
+                className="btn btn-neutral"
                 type="submit"
-                value="Sign Up"
+                value="Register"
               />
             </div>
           </form>
