@@ -1,29 +1,32 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useLocationSelector from "../CustomHook/useLocationSelector";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const Registration = () => {
+  const [showPassWord, setShowPassWord] = useState(false);
+  const [showPassWord2, setShowPassWord2] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch, // Used to watch changes in the form values
+    watch,
   } = useForm();
 
   const { loading, districts, filteredUpazillas, filterUpazillas } =
     useLocationSelector();
-
-  // Watch the selected district to filter upazillas dynamically
+  const password = watch("password");
   const selectedDistrict = watch("district");
 
-  // Use useEffect to filter upazillas when selectedDistrict changes
   useEffect(() => {
     filterUpazillas(selectedDistrict);
-  }, [selectedDistrict]); // Only re-run the effect if selectedDistrict changes
+  }, [selectedDistrict]);
 
   const onSubmit = (data) => {
     console.log(data);
+    delete data.confirmPassword;
   };
 
   return (
@@ -67,6 +70,28 @@ const Registration = () => {
                 <span className="text-red-600">Email is required</span>
               )}
             </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Blood Group</span>
+              </label>
+              <select
+                {...register("blood", { required: true })}
+                className="select select-bordered w-full max-w-xs"
+              >
+                <option value="">Select a blood Group</option>
+                <option value={"A+"}>A+</option>
+                <option value={"A-"}>A-</option>
+                <option value={"B+"}>B+</option>
+                <option value={"B-"}>B-</option>
+                <option value={"O+"}>O+</option>
+                <option value={"O-"}>O-</option>
+                <option value={"AB+"}>AB+</option>
+                <option value={"AB-"}>AB-</option>
+              </select>
+              {errors.blood && (
+                <span className="text-red-600">Blood group is required</span>
+              )}
+            </div>
 
             <div>
               <label htmlFor="district">District:</label>
@@ -74,7 +99,6 @@ const Registration = () => {
                 id="district"
                 {...register("district", { required: true })}
                 className="input input-bordered"
-                required
               >
                 <option value="">Select district</option>
                 {districts.map((district) => (
@@ -95,7 +119,6 @@ const Registration = () => {
                 {...register("upazilla", { required: true })}
                 className="input input-bordered"
                 disabled={!selectedDistrict}
-                required
               >
                 <option value="">Select upazilla</option>
                 {filteredUpazillas.map((upazilla) => (
@@ -113,18 +136,31 @@ const Registration = () => {
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
-              <input
-                type="password"
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 20,
-                  pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-                })}
-                placeholder="Password"
-                className="input input-bordered"
-                name="password"
-              />
+              <div className="flex items-center">
+                <input
+                  type={showPassWord ? "text" : "password"}
+                  {...register("password", {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 20,
+                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                  })}
+                  placeholder="Password"
+                  className="input input-bordered"
+                  name="password"
+                />
+                <span
+                  className="hover:cursor-pointer"
+                  onClick={() => setShowPassWord(!showPassWord)}
+                >
+                  {showPassWord ? (
+                    <FaRegEye></FaRegEye>
+                  ) : (
+                    <FaRegEyeSlash></FaRegEyeSlash>
+                  )}
+                </span>
+              </div>
+
               {errors.password && errors.password.type === "required" && (
                 <p className="text-red-600">Password is required</p>
               )}
@@ -143,6 +179,36 @@ const Registration = () => {
                   Password must have one upper case, one lower case, one number,
                   and one special character
                 </p>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                type={showPassWord2 ? "text" : "password"}
+                {...register("confirmPassword", {
+                  required: true,
+                  validate: (value) =>
+                    value === password || "Passwords do not match",
+                })}
+                placeholder="Confirm Password"
+                className="input input-bordered"
+                name="confirmPassword"
+              />
+              <span
+                className="hover:cursor-pointer"
+                onClick={() => setShowPassWord2(!showPassWord2)}
+              >
+                {showPassWord2 ? (
+                  <FaRegEye></FaRegEye>
+                ) : (
+                  <FaRegEyeSlash></FaRegEyeSlash>
+                )}
+              </span>
+              {errors.confirmPassword && (
+                <p className="text-red-600">{errors.confirmPassword.message}</p>
               )}
             </div>
 
@@ -169,10 +235,10 @@ const Registration = () => {
               />
             </div>
           </form>
-          <p>
+          <p className="m-4">
             <small>
               Already have an account?{" "}
-              <Link className="text-blue-700 underline" to={"/login"}>
+              <Link className="text-blue-700 underline font-bold" to={"/login"}>
                 Log in
               </Link>
             </small>
