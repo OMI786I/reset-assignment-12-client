@@ -51,29 +51,41 @@ const Area = () => {
 
   return (
     <div>
-      <label htmlFor="district">district:</label>
-      <select
-        id="district"
-        value={selectedDistrict}
-        onChange={(e) => setSelectedDistrict(e.target.value)}
-      >
-        <option value="">Select district</option>
-        {district.map((district) => (
-          <option key={district.id} value={district.id}>
-            {district.name}
-          </option>
-        ))}
-      </select>
-
-      <label htmlFor="upazilla">upazilla:</label>
-      <select id="upazilla" disabled={!selectedDistrict}>
-        <option value="">Select upazilla</option>
-        {filteredUpazilla.map((upazilla) => (
-          <option key={upazilla.id} value={upazilla.id}>
-            {upazilla.name}
-          </option>
-        ))}
-      </select>
+      <form>
+        {" "}
+        <div className="form-control">
+          {" "}
+          <label htmlFor="district">district:</label>
+          <select
+            id="district"
+            value={selectedDistrict}
+            onChange={(e) => setSelectedDistrict(e.target.value)}
+          >
+            <option disabled selected>
+              Select district
+            </option>
+            {district.map((district) => (
+              <option key={district.id} value={district.id}>
+                {district.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-control">
+          {" "}
+          <label htmlFor="upazilla">upazilla:</label>
+          <select id="upazilla" disabled={!selectedDistrict}>
+            <option disabled selected>
+              Select upazilla
+            </option>
+            {filteredUpazilla.map((upazilla) => (
+              <option key={upazilla.id} value={upazilla.id}>
+                {upazilla.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </form>
     </div>
   );
 };
