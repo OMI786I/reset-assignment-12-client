@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import useLocationSelector from "../CustomHook/useLocationSelector";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import SearchResult from "./SearchResult";
+import { data } from "autoprefixer";
+import { Link } from "react-router-dom";
 
 const SearchDonor = () => {
   const {
@@ -17,7 +20,9 @@ const SearchDonor = () => {
     filterUpazillas(selectedDistrict);
   }, [selectedDistrict]);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="hero-content">
@@ -25,9 +30,7 @@ const SearchDonor = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="card-body card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl md:w-1/2"
       >
-        <h1 className="font-bold text-3xl text-center flex items-center gap-5">
-          <FaSearch></FaSearch>Search Donor
-        </h1>
+        <h1 className="font-bold text-3xl text-center  gap-5">Search Donor</h1>
         <div className="form-control ">
           <label className="label">
             <span className="label-text">Blood Group</span>
@@ -39,13 +42,14 @@ const SearchDonor = () => {
             <option disabled selected>
               Select a blood Group
             </option>
-            <option value={"A+"}>A+</option>
+            {/**    //B%2B */}
+            <option value={"A%2B"}>A+</option>
             <option value={"A-"}>A-</option>
-            <option value={"B+"}>B+</option>
+            <option value={"B%2B"}>B+</option>
             <option value={"B-"}>B-</option>
-            <option value={"O+"}>O+</option>
+            <option value={"O%2B"}>O+</option>
             <option value={"O-"}>O-</option>
-            <option value={"AB+"}>AB+</option>
+            <option value={"AB%2b"}>AB+</option>
             <option value={"AB-"}>AB-</option>
           </select>
           {errors.name && (
@@ -91,7 +95,12 @@ const SearchDonor = () => {
           )}
         </div>
         <div className="form-control mt-6 max-w-md">
-          <button className="btn btn-neutral">Search</button>
+          <Link to={"/result"} state={{ data: watch() }}>
+            <button className="btn btn-neutral">
+              <FaSearch />
+              Search
+            </button>
+          </Link>
         </div>
       </form>
     </div>
