@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useLocationSelector from "../CustomHook/useLocationSelector";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../Provider/AuthProvider";
+import { updateProfile } from "firebase/auth";
 const Registration = () => {
   const [showPassWord, setShowPassWord] = useState(false);
   const [showPassWord2, setShowPassWord2] = useState(false);
@@ -15,6 +17,7 @@ const Registration = () => {
     formState: { errors },
     watch,
   } = useForm();
+  const { createUser } = useContext(AuthContext);
   const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -34,12 +37,25 @@ const Registration = () => {
       .post("http://localhost:5000/donor", data)
       .then((response) => {
         if (response.data.insertedId) {
-          toast.success("You have successfully added");
+          toast.success("Your data is added to database");
         }
         console.log(response);
       })
       .catch((error) => {
         toast.error("There was an error adding the data");
+        console.log(error);
+      });
+
+    createUser(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+        toast.success("You have successfully registered");
+        updateProfile(result.user, {
+          displayName: data.name,
+          photoURL: data.image,
+        });
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
