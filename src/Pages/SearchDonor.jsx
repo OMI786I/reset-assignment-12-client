@@ -22,16 +22,17 @@ const SearchDonor = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    <SearchResult></SearchResult>;
   };
 
   return (
-    <div className="hero-content">
+    <div className="">
+      <h1 className="font-bold text-3xl text-center  gap-5">Search Donor</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="card-body card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl md:w-1/2"
+        className="md:flex items-center gap-5"
       >
-        <h1 className="font-bold text-3xl text-center  gap-5">Search Donor</h1>
-        <div className="form-control ">
+        <div className=" ">
           <label className="label">
             <span className="label-text">Blood Group</span>
           </label>
@@ -52,12 +53,16 @@ const SearchDonor = () => {
             <option value={"AB%2b"}>AB+</option>
             <option value={"AB-"}>AB-</option>
           </select>
-          {errors.name && (
-            <span className="text-red-600">Name is required</span>
+          {errors.blood && (
+            <span className="text-red-600">
+              blood group is required is required
+            </span>
           )}
         </div>
-        <div>
-          <label htmlFor="district">District:</label>
+        <div className="">
+          <label className="label">
+            <span className="label-text">District</span>
+          </label>
           <select
             id="district"
             {...register("district", { required: true })}
@@ -75,8 +80,10 @@ const SearchDonor = () => {
           )}
         </div>
 
-        <div>
-          <label htmlFor="upazilla">Upazilla:</label>
+        <div className="">
+          <label className="label">
+            <span className="label-text">Upazilla</span>
+          </label>
           <select
             id="upazilla"
             {...register("upazilla", { required: true })}
@@ -95,12 +102,10 @@ const SearchDonor = () => {
           )}
         </div>
         <div className="form-control mt-6 max-w-md">
-          <Link to={"/result"} state={{ data: watch() }}>
-            <button className="btn btn-neutral">
-              <FaSearch />
-              Search
-            </button>
-          </Link>
+          <button className="btn btn-neutral">
+            <FaSearch />
+            Search
+          </button>
         </div>
       </form>
     </div>
