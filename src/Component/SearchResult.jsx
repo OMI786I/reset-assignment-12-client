@@ -2,13 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-const SearchResult = () => {
-  const location = useLocation();
+const SearchResult = ({ searchData }) => {
   const [data, setData] = useState();
 
   const [loading, setLoading] = useState(true);
-
-  const getData = location.state?.data;
+  const { blood, district, upazilla } = searchData;
+  const getData = searchData;
 
   console.log(getData);
 

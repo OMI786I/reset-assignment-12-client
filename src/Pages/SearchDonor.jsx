@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useLocationSelector from "../CustomHook/useLocationSelector";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import SearchResult from "./SearchResult";
+import SearchResult from "../Component/SearchResult";
 import { data } from "autoprefixer";
 import { Link } from "react-router-dom";
 
@@ -15,6 +15,7 @@ const SearchDonor = () => {
   } = useForm();
   const { loading, districts, filteredUpazillas, filterUpazillas } =
     useLocationSelector();
+  const [searchData, setSearchData] = useState();
   const selectedDistrict = watch("district");
   useEffect(() => {
     filterUpazillas(selectedDistrict);
@@ -22,7 +23,7 @@ const SearchDonor = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    <SearchResult></SearchResult>;
+    setSearchData(data);
   };
 
   return (
@@ -108,6 +109,7 @@ const SearchDonor = () => {
           </button>
         </div>
       </form>
+      {searchData ? <SearchResult searchData={searchData}></SearchResult> : ""}
     </div>
   );
 };

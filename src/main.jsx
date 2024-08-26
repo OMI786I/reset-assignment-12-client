@@ -10,7 +10,6 @@ import Request from "./Pages/Request.jsx";
 import Registration from "./Pages/Registration.jsx";
 import AuthProvider from "./Provider/AuthProvider.jsx";
 import Login from "./Pages/Login.jsx";
-import SearchResult from "./Pages/SearchResult.jsx";
 
 const router = createBrowserRouter([
   {
