@@ -8,6 +8,7 @@ import Home from "./Pages/Home.jsx";
 import SearchDonor from "./Pages/SearchDonor.jsx";
 import Request from "./Pages/Request.jsx";
 import Registration from "./Pages/Registration.jsx";
+import AuthProvider from "./Provider/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
