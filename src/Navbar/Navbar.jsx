@@ -108,10 +108,12 @@ const Navbar = () => {
               <p>{user.displayName}</p>
               <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
-                  <a>
-                    <RxDashboard />
-                    Dashboard
-                  </a>
+                  <Link to={"/dashboard"}>
+                    <button className="flex items-center gap-2">
+                      <RxDashboard />
+                      Dashboard
+                    </button>
+                  </Link>
                 </li>
                 <li>
                   <button onClick={handleSignOut}>

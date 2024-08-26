@@ -18,7 +18,7 @@ const SearchResult = ({ searchData }) => {
 
     axios
       .get(
-        `http://localhost:5000/donor?district=${getData.district}&upazilla=${getData.upazilla}&blood=${getData.blood}`
+        `http://localhost:5000/donor?district=${district}&upazilla=${upazilla}&blood=${blood}`
       )
       .then((res) => {
         setData(res.data);
