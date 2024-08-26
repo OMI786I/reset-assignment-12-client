@@ -11,6 +11,7 @@ import { updateProfile } from "firebase/auth";
 const Registration = () => {
   const [showPassWord, setShowPassWord] = useState(false);
   const [showPassWord2, setShowPassWord2] = useState(false);
+  const status = "active";
   const {
     register,
     handleSubmit,
@@ -33,22 +34,23 @@ const Registration = () => {
   const onSubmit = (data) => {
     console.log(data);
     delete data.confirmPassword;
-    axios
-      .post("http://localhost:5000/donor", data)
-      .then((response) => {
-        if (response.data.insertedId) {
-          toast.success("Your data is added to database");
-        }
-        console.log(response);
-      })
-      .catch((error) => {
-        toast.error("There was an error adding the data");
-        console.log(error);
-      });
+    const submitData = { ...data, status };
 
     createUser(data.email, data.password)
       .then((result) => {
         console.log(result);
+        axios
+          .post("http://localhost:5000/donor", submitData)
+          .then((response) => {
+            if (response.data.insertedId) {
+              toast.success("Your data is added to database");
+            }
+            console.log(response);
+          })
+          .catch((error) => {
+            toast.error("There was an error adding the data");
+            console.log(error);
+          });
         toast.success("You have successfully registered");
         updateProfile(result.user, {
           displayName: data.name,
@@ -57,6 +59,7 @@ const Registration = () => {
       })
       .catch((error) => {
         console.log(error);
+        toast.error("you have registered already");
       });
   };
 

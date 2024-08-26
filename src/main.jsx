@@ -9,6 +9,7 @@ import SearchDonor from "./Pages/SearchDonor.jsx";
 import Request from "./Pages/Request.jsx";
 import Registration from "./Pages/Registration.jsx";
 import AuthProvider from "./Provider/AuthProvider.jsx";
+import Login from "./Pages/Login.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/registration",
         element: <Registration></Registration>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
       },
     ],
   },
