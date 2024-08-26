@@ -97,7 +97,7 @@ const Navbar = () => {
         </div>
 
         {user ? (
-          <div className="navbar-end">
+          <div className="navbar-end ">
             {" "}
             <div className="dropdown dropdown-end  ">
               <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
@@ -105,7 +105,7 @@ const Navbar = () => {
                   <img src={user.photoURL}></img>
                 </div>
               </label>
-              <p>{user.displayName}</p>
+
               <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
                   <Link to={"/dashboard"}>
@@ -123,6 +123,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
+            <p className="hidden md:flex">{user.displayName}</p>
           </div>
         ) : (
           <div className="navbar-end">
