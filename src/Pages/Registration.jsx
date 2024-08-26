@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useLocationSelector from "../CustomHook/useLocationSelector";
 import { useContext, useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
@@ -9,6 +9,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { AuthContext } from "../Provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 const Registration = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showPassWord, setShowPassWord] = useState(false);
   const [showPassWord2, setShowPassWord2] = useState(false);
   const status = "active";
@@ -32,6 +34,7 @@ const Registration = () => {
   }, [selectedDistrict]);
 
   const onSubmit = (data) => {
+    navigate(location?.state ? location.state : "/");
     console.log(data);
     delete data.confirmPassword;
     const submitData = { ...data, status };

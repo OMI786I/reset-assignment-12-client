@@ -20,9 +20,11 @@ const Banner = () => {
             </p>
             <div className="flex gap-6">
               {" "}
-              <button className="btn btn-error text-white">
-                Join as a donor
-              </button>
+              <Link to={"/registration"}>
+                <button className="btn btn-error text-white">
+                  Join as a donor
+                </button>
+              </Link>
               <Link to={"searchPage"}>
                 <button className="btn btn-outline text-white">
                   Search donor
