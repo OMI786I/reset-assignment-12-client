@@ -5,26 +5,47 @@ import { FaSearch } from "react-icons/fa";
 import SearchResult from "../Component/SearchResult";
 import { data } from "autoprefixer";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SearchDonor = () => {
+  const [loading, setLoading] = useState(true);
+  const [districtData, setdistrictData] = useState();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const { loading, districts, filteredUpazillas, filterUpazillas } =
+  const { districts, filteredUpazillas, filterUpazillas } =
     useLocationSelector();
   const [searchData, setSearchData] = useState();
-  const selectedDistrict = watch("district");
+  const selectedDistrict = watch("districtId");
+  useEffect(() => {
+    setLoading(true);
+
+    axios
+      .get("district.json")
+      .then((assignment) => {
+        setdistrictData(assignment.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
   useEffect(() => {
     filterUpazillas(selectedDistrict);
   }, [selectedDistrict]);
 
   const onSubmit = (data) => {
     console.log(data);
-    setSearchData(data);
-    <SearchResult searchData={searchData}></SearchResult>;
+    const chika = districtData.find((data2) => data2.id === data.districtId);
+    const district = chika.name;
+    const submitData = { ...data, district };
+    console.log(submitData);
+    setSearchData(submitData);
+    <SearchResult searchData={setSearchData}></SearchResult>;
   };
 
   return (
@@ -34,7 +55,7 @@ const SearchDonor = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="md:flex items-center gap-5"
       >
-        <div className=" ">
+        <div className=" form-control">
           <label className="label">
             <span className="label-text">Blood Group</span>
           </label>
@@ -42,9 +63,6 @@ const SearchDonor = () => {
             {...register("blood")}
             className="select select-bordered w-full max-w-xs"
           >
-            <option disabled selected>
-              Select a blood Group
-            </option>
             {/**    //B%2B */}
             <option value={"A%2B"}>A+</option>
             <option value={"A-"}>A-</option>
@@ -66,8 +84,8 @@ const SearchDonor = () => {
             <span className="label-text">District</span>
           </label>
           <select
-            id="district"
-            {...register("district", { required: true })}
+            id="districtId"
+            {...register("districtId", { required: true })}
             className="input input-bordered"
           >
             <option value="">Select district</option>
@@ -94,7 +112,7 @@ const SearchDonor = () => {
           >
             <option value="">Select upazilla</option>
             {filteredUpazillas.map((upazilla) => (
-              <option key={upazilla.id} value={upazilla.id}>
+              <option key={upazilla.id} value={upazilla.name}>
                 {upazilla.name}
               </option>
             ))}

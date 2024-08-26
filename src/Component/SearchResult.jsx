@@ -44,11 +44,12 @@ const SearchResult = ({ searchData }) => {
             <thead>
               <tr>
                 <th></th>
+                <th>image</th>
                 <th>Name</th>
-                <th>Blood Group</th>
                 <th>District</th>
                 <th>Upazilla</th>
                 <th>email</th>
+                <th>Blood</th>
                 <th></th>
               </tr>
             </thead>
@@ -76,6 +77,7 @@ const SearchResult = ({ searchData }) => {
                   <td>{res.district}</td>
                   <td>{res.upazilla}</td>
                   <td>{res.email}</td>
+                  <td>{res.blood}</td>
                   <th>
                     <button className="btn btn-ghost btn-xs">details</button>
                   </th>

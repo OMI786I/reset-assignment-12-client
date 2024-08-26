@@ -14,7 +14,7 @@ const Registration = () => {
   const [loading, setLoading] = useState(true);
   const [showPassWord, setShowPassWord] = useState(false);
   const [showPassWord2, setShowPassWord2] = useState(false);
-  const [districtName, setDistrictName] = useState();
+  const [districtData, setdistrictData] = useState();
 
   const status = "active";
 
@@ -24,7 +24,7 @@ const Registration = () => {
     axios
       .get("district.json")
       .then((assignment) => {
-        setDistrictName(assignment.data);
+        setdistrictData(assignment.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -53,11 +53,12 @@ const Registration = () => {
   }, [selectedDistrict]);
 
   const onSubmit = (data) => {
-    const chika = districtName.find((data2) => data2.id);
+    const chika = districtData.find((data2) => data2.id === data.districtId);
     const district = chika.name;
+    console.log(district);
 
     delete data.confirmPassword;
-    delete data.districtId;
+
     const submitData = { ...data, status, district };
     console.log(submitData);
     createUser(data.email, data.password)
