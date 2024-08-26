@@ -11,6 +11,7 @@ import Registration from "./Pages/Registration.jsx";
 import AuthProvider from "./Provider/AuthProvider.jsx";
 import Login from "./Pages/Login.jsx";
 import Dashboard from "./Layout/Dashboard.jsx";
+import PrivateRoute from "./Firebase/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [{}],
   },
 ]);
