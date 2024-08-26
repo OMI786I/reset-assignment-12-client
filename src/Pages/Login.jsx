@@ -108,10 +108,13 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            <p>
+            <p className="p-3">
               <small>
                 New Here?{" "}
-                <Link to={"/register"} className="underline text-blue-600">
+                <Link
+                  to={"/registration"}
+                  className="underline text-blue-600 font-bold"
+                >
                   Create an account
                 </Link>
               </small>

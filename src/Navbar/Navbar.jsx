@@ -1,7 +1,35 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
+import { RxDashboard } from "react-icons/rx";
+import { HiLogout } from "react-icons/hi";
+import { BiLogInCircle } from "react-icons/bi";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const handleSignOut = () => {
+    logout();
+  };
   const navLink = (
+    <div className="flex-row md:flex-col gap-6  ">
+      <NavLink to="/">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+          Home
+        </button>
+      </NavLink>
+      <NavLink to="/donationRequests">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+          Donation requests
+        </button>
+      </NavLink>
+      <NavLink to="/blog">
+        <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
+          Blog
+        </button>
+      </NavLink>
+    </div>
+  );
+  const navLink2 = (
     <div className="flex-row md:flex-col gap-6  ">
       <NavLink to="/">
         <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
@@ -25,7 +53,6 @@ const Navbar = () => {
       </NavLink>
     </div>
   );
-
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -51,7 +78,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              {navLink}
+              {user ? navLink2 : navLink}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">
@@ -63,16 +90,47 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navLink}</ul>
+          <ul className="menu menu-horizontal px-1">
+            {" "}
+            {user ? navLink2 : navLink}
+          </ul>
         </div>
-        <div className="navbar-end">
-          <Link to={"/login"}>
-            <button className="btn btn-neutral">Login</button>
-          </Link>
-          <Link to={"/registration"}>
-            <button className="btn btn-neutral">Register</button>
-          </Link>
-        </div>
+
+        {user ? (
+          <div className="navbar-end">
+            {" "}
+            <div className="dropdown dropdown-end  ">
+              <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
+                <div className="w-16 rounded-full">
+                  <img src={user.photoURL}></img>
+                </div>
+              </label>
+              <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                <li>
+                  <a>
+                    <RxDashboard />
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <button onClick={handleSignOut}>
+                    <HiLogout />
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="navbar-end">
+            <Link to={"/login"}>
+              <button className="btn btn-neutral">
+                <BiLogInCircle />
+                Login
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
