@@ -7,6 +7,7 @@ import {
 } from "react-simple-captcha";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(true);
+  const [showPassWord, setShowPassWord] = useState(false);
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -76,13 +78,26 @@ const Login = () => {
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  name="password"
-                  required
-                />
+                <div className="flex items-center gap-2">
+                  <input
+                    type={showPassWord ? "text" : "password"}
+                    placeholder="password"
+                    className="input input-bordered"
+                    name="password"
+                    required
+                  />
+                  <span
+                    className="hover:cursor-pointer"
+                    onClick={() => setShowPassWord(!showPassWord)}
+                  >
+                    {showPassWord ? (
+                      <FaRegEye></FaRegEye>
+                    ) : (
+                      <FaRegEyeSlash></FaRegEyeSlash>
+                    )}
+                  </span>
+                </div>
+
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
