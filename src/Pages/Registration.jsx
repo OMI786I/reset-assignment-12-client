@@ -11,9 +11,28 @@ import { updateProfile } from "firebase/auth";
 const Registration = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [showPassWord, setShowPassWord] = useState(false);
   const [showPassWord2, setShowPassWord2] = useState(false);
+  const [districtName, setDistrictName] = useState();
+
   const status = "active";
+
+  useEffect(() => {
+    setLoading(true);
+
+    axios
+      .get("district.json")
+      .then((assignment) => {
+        setDistrictName(assignment.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -24,23 +43,26 @@ const Registration = () => {
   const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
-  const { loading, districts, filteredUpazillas, filterUpazillas } =
+  const { districts, filteredUpazillas, filterUpazillas } =
     useLocationSelector();
   const password = watch("password");
-  const selectedDistrict = watch("district");
+  const selectedDistrict = watch("districtId");
 
   useEffect(() => {
     filterUpazillas(selectedDistrict);
   }, [selectedDistrict]);
 
   const onSubmit = (data) => {
-    navigate(location?.state ? location.state : "/");
-    console.log(data);
-    delete data.confirmPassword;
-    const submitData = { ...data, status };
+    const chika = districtName.find((data2) => data2.id);
+    const district = chika.name;
 
+    delete data.confirmPassword;
+    delete data.districtId;
+    const submitData = { ...data, status, district };
+    console.log(submitData);
     createUser(data.email, data.password)
       .then((result) => {
+        navigate(location?.state ? location.state : "/");
         console.log(result);
         axios
           .post("http://localhost:5000/donor", submitData)
@@ -131,10 +153,10 @@ const Registration = () => {
             </div>
 
             <div>
-              <label htmlFor="district">District:</label>
+              <label htmlFor="districtId">District:</label>
               <select
-                id="district"
-                {...register("district", { required: true })}
+                id="districtId"
+                {...register("districtId", { required: true })}
                 className="input input-bordered"
               >
                 <option value="">Select district</option>
@@ -159,7 +181,7 @@ const Registration = () => {
               >
                 <option value="">Select upazilla</option>
                 {filteredUpazillas.map((upazilla) => (
-                  <option key={upazilla.id} value={upazilla.id}>
+                  <option key={upazilla.id} value={upazilla.name}>
                     {upazilla.name}
                   </option>
                 ))}
