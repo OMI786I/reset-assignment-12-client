@@ -12,6 +12,11 @@ import AuthProvider from "./Provider/AuthProvider.jsx";
 import Login from "./Pages/Login.jsx";
 import Dashboard from "./Layout/Dashboard.jsx";
 import PrivateRoute from "./Firebase/PrivateRoute.jsx";
+import Profile from "./Dashboard/Profile.jsx";
+import DonationRequest from "./Dashboard/DonationRequest.jsx";
+import CreateDRequest from "./Dashboard/CreateDRequest.jsx";
+import AllUsers from "./Dashboard/AllUsers.jsx";
+import AllBloodDonationReq from "./Dashboard/AllBloodDonationReq.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +52,32 @@ const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </PrivateRoute>
     ),
-    children: [{}],
+    children: [
+      {
+        path: "profile",
+        element: <Profile></Profile>,
+      },
+      {
+        path: "my-donation-request",
+        element: <DonationRequest></DonationRequest>,
+      },
+      {
+        path: "create-donation-request",
+        element: <CreateDRequest></CreateDRequest>,
+      },
+      {
+        path: "all-blood-donation-requests",
+        element: <AllBloodDonationReq></AllBloodDonationReq>,
+      },
+      {
+        path: "content-management",
+        element: <AllBloodDonationReq></AllBloodDonationReq>,
+      },
+      {
+        path: "all-users",
+        element: <AllUsers></AllUsers>,
+      },
+    ],
   },
 ]);
 

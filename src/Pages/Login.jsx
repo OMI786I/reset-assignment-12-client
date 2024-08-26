@@ -8,6 +8,7 @@ import {
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -24,17 +25,22 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      navigate(location?.state ? location.state : "/");
-      console.log(user);
-      console.log(user);
-      Swal.fire({
-        title: "Successfully logged In!",
-        text: "You clicked the button!",
-        icon: "success",
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        navigate(location?.state ? location.state : "/");
+        console.log(user);
+        console.log(user);
+        Swal.fire({
+          title: "Successfully logged In!",
+          text: "You clicked the button!",
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        toast.error("Couldn't sign. Are you registered?");
+        console.log(error);
       });
-    });
   };
 
   const handleValidateCapthca = (e) => {
@@ -118,7 +124,7 @@ const Login = () => {
                 />
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary" disabled={disabled}>
+                <button className="btn btn-neutral" disabled={disabled}>
                   Login
                 </button>
               </div>

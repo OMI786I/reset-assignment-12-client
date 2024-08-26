@@ -2,47 +2,55 @@ import { NavLink, Outlet } from "react-router-dom";
 import { FaCalendar, FaShoppingCart } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { MdOutlineReviews } from "react-icons/md";
-import { TbBrandBooking } from "react-icons/tb";
+import { TbBrandBooking, TbDashboard, TbUser } from "react-icons/tb";
+import { IoIosDocument } from "react-icons/io";
 const Dashboard = () => {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       {/*dash boardside bar */}
-      <div className="w-64 min-h-full bg-orange-400">
+      <div className="w-[20%] text-xl h-full bg-neutral text-white">
         <ul className="menu">
           <li>
-            <NavLink to={"/dashboard/userHome"}>
+            <NavLink to={"/dashboard/profile"}>
               <FaHome />
-              User Home
+              Profile
             </NavLink>
           </li>
           <li>
-            <NavLink to={"/dashboard/reservation"}>
+            <NavLink to={"/dashboard/my-donation-request"}>
               <FaCalendar />
-              Reservation
+              My Donation Request
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to={"/dashboard/create-donation-request"}>
+              <IoIosDocument />
+              Create Donation Request
             </NavLink>
           </li>
           <li>
-            <NavLink to={"/dashboard/cart"}>
-              <FaShoppingCart />
-              My Cart
+            <NavLink to={"/dashboard/all-users"}>
+              <TbUser />
+              All Users
             </NavLink>
           </li>
           <li>
-            <NavLink to={"/dashboard/review"}>
-              <MdOutlineReviews />
-              Add review
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard/bookings"}>
+            <NavLink to={"/dashboard/all-blood-donation-requests"}>
               <TbBrandBooking />
-              My bookings
+              All blood donation requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/dashboard/content-management"}>
+              <TbDashboard />
+              Content management
             </NavLink>
           </li>
         </ul>
       </div>
       {/*Dashboard content */}
-      <div className="flex-1">
+      <div className="flex-1 w-[80%]">
         <Outlet></Outlet>
       </div>
     </div>
