@@ -24,6 +24,7 @@ const SearchDonor = () => {
   const onSubmit = (data) => {
     console.log(data);
     setSearchData(data);
+    <SearchResult searchData={searchData}></SearchResult>;
   };
 
   return (

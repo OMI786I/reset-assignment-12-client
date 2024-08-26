@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 
 const SearchResult = ({ searchData }) => {
@@ -26,7 +27,7 @@ const SearchResult = ({ searchData }) => {
         console.error(error);
         setLoading(false);
       });
-  }, []);
+  }, [getData]);
   console.log(data);
   if (loading) {
     return (
@@ -34,7 +35,57 @@ const SearchResult = ({ searchData }) => {
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
-  } else return <div></div>;
+  } else
+    return (
+      <div>
+        <div className="overflow-x-auto">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Blood Group</th>
+                <th>District</th>
+                <th>Upazilla</th>
+                <th>email</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {data.map((res, index) => (
+                <tr key={res._id}>
+                  <th>{index + 1}</th>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src={res.image}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    {res.name}
+                    <br />
+                  </td>
+                  <td>{res.district}</td>
+                  <td>{res.upazilla}</td>
+                  <td>{res.email}</td>
+                  <th>
+                    <button className="btn btn-ghost btn-xs">details</button>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
 };
 
 export default SearchResult;
