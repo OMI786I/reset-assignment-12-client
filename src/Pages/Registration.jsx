@@ -22,7 +22,7 @@ const Registration = () => {
     setLoading(true);
 
     axios
-      .get("district.json")
+      .get("/district.json")
       .then((assignment) => {
         setdistrictData(assignment.data);
         setLoading(false);
