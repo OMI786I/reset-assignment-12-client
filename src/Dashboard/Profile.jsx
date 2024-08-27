@@ -1,11 +1,98 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
   console.log(user);
 
-  return <div>THis is profile</div>;
+  useEffect(() => {
+    setLoading(true);
+
+    axios
+      .get(`http://localhost:5000/donor?email=${user.email}`)
+      .then((assignment) => {
+        setData(assignment.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, [user.email]);
+
+  console.log(data);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  } else
+    return (
+      <div>
+        <div>
+          <div
+            className="relative h-[512px] bg-gradient-to-r
+                from-blue-400 to-purple-500 "
+          >
+            {/**overlay */}
+            <div
+              className="absolute inset-0 
+                    bg-gray-800 opacity-50 
+                    z-10"
+            ></div>
+            {/**background */}
+            <div
+              className="absolute inset-0 flex 
+                    items-center justify-center
+                    text-black z-20"
+            >
+              <div
+                className=" p-8 
+                        "
+              >
+                {data.map((res) => (
+                  <div
+                    key={res._id}
+                    className="card card-side bg-base-100 shadow-xl"
+                  >
+                    <figure>
+                      <img src={res.image} className="w-52" alt="Movie" />
+                    </figure>
+                    <div className="card-body">
+                      <h2 className="">
+                        <span className="font-bold">User Name: </span>
+                        {res.name}
+                      </h2>
+                      <h2 className="">
+                        <span className="font-bold">User Email: </span>
+                        {res.email}
+                      </h2>
+                      <h2 className="">
+                        <span className="font-bold">User Address: </span>
+                        {res.district}, {res.upazilla}
+                      </h2>
+                      <h2 className="">
+                        <span className="font-bold">Blood Group: </span>
+                        <div className="badge badge-error gap-2 text-white">
+                          {res.blood}
+                        </div>
+                      </h2>
+                      <div className="card-actions justify-end">
+                        <button className="btn btn-primary">Watch</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
 };
 
 export default Profile;
