@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Provider/AuthProvider";
 import useLocationSelector from "../CustomHook/useLocationSelector";
+import toast from "react-hot-toast";
 
 const CreateDRequest = () => {
   const {
@@ -42,6 +43,19 @@ const CreateDRequest = () => {
     console.log(district);
     const submitData = { ...data, district };
     console.log(submitData);
+
+    axios
+      .post("http://localhost:5000/requestDonor", submitData)
+      .then((response) => {
+        if (response.data.insertedId) {
+          toast.success("You have successfully added");
+        }
+        console.log(response);
+      })
+      .catch((error) => {
+        toast.error("There was an error adding the data");
+        console.log(error);
+      });
   };
   const [data, setData] = useState([]);
 
