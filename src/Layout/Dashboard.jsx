@@ -16,7 +16,7 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen">
       {/*dash boardside bar */}
-      <div className="w-[42%] md:w-[20%]  md:text-xl h-full bg-neutral text-white">
+      <div className="w-[42%] md:w-[20%]  md:text-xl flex flex-col h-full bg-neutral text-white">
         <ul className="menu text-xs md:text-[14px] lg:text-lg">
           <li>
             <NavLink to={"/dashboard"}>
@@ -64,7 +64,7 @@ const Dashboard = () => {
         </ul>
       </div>
       {/*Dashboard content */}
-      <div className="flex-1 w-[80%]  text-xs md:text-[14px] lg:text-lg h-full">
+      <div className="flex-1 w-[80%]   text-xs md:text-[14px] lg:text-lg h-full">
         {isDashboardRoot && (
           <div>
             <div

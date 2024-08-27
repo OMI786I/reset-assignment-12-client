@@ -11,9 +11,9 @@ const useLocationSelector = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const districtResponse = await axios.get("district.json");
+        const districtResponse = await axios.get("/district.json");
         setDistricts(districtResponse.data);
-        const upazillaResponse = await axios.get("upazilla.json");
+        const upazillaResponse = await axios.get("/upazilla.json");
         setUpazillas(upazillaResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
