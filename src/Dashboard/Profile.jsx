@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 import UpdateProfile from "../Component/Dashboard/UpdateProfile";
@@ -9,9 +9,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   console.log(user);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     setLoading(true);
-
     axios
       .get(`http://localhost:5000/donor?email=${user.email}`)
       .then((assignment) => {
@@ -23,6 +22,10 @@ const Profile = () => {
         setLoading(false);
       });
   }, [user.email]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   console.log(data);
   if (loading) {
@@ -90,7 +93,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="w-full">
-          <UpdateProfile data={data}></UpdateProfile>
+          <UpdateProfile data={data} onUpdate={fetchData}></UpdateProfile>
         </div>
       </div>
     );

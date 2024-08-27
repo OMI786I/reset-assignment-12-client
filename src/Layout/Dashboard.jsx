@@ -7,6 +7,7 @@ import { IoIosDocument } from "react-icons/io";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { RxDashboard } from "react-icons/rx";
+import { Toaster } from "react-hot-toast";
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
@@ -96,6 +97,7 @@ const Dashboard = () => {
             </div>
           </div>
         )}
+        <Toaster></Toaster>
         <Outlet></Outlet>
       </div>
     </div>

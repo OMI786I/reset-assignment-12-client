@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const UpdateProfile = ({ data }) => {
+const UpdateProfile = ({ data, onUpdate }) => {
   const [{ name, blood, district, upazilla, image, _id }] = data;
   console.log(data);
   const [loading, setLoading] = useState(true);
@@ -49,6 +49,7 @@ const UpdateProfile = ({ data }) => {
         if (response.data.modifiedCount > 0) {
           toast.success("You have successfully updated");
           console.log(response);
+          onUpdate();
         }
       })
       .catch((error) => {
