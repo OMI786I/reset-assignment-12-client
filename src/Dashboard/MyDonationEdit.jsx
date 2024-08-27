@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useLocationSelector from "../CustomHook/useLocationSelector";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const MyDonationEdit = () => {
-  const data = useLoaderData();
+  const getData = useLoaderData();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -44,7 +46,21 @@ const MyDonationEdit = () => {
     const district = chika.name;
     console.log(district);
     const submitData = { ...data, district };
-    console.log(submitData);
+    axios
+      .put(`http://localhost:5000/requestDonor/${getData._id}`, submitData)
+      .then((response) => {
+        setLoading(false);
+        console.log(response);
+        if (response.data.modifiedCount > 0) {
+          toast.success("You have successfully updated");
+          console.log(response);
+          navigate("/dashboard/my-donation-request");
+        }
+      })
+      .catch((error) => {
+        toast.error("There was an error updated the data");
+        console.log(error);
+      });
   };
   return (
     <div>
@@ -67,7 +83,7 @@ const MyDonationEdit = () => {
               className={`input input-bordered w-full ${
                 errors.recipientName ? "input-error" : ""
               }`}
-              defaultValue={data.recipientName}
+              defaultValue={getData.recipientName}
             />
             {errors.recipientName && (
               <p className="text-error mt-2">This field is required</p>
@@ -123,7 +139,7 @@ const MyDonationEdit = () => {
               className={`input input-bordered w-full ${
                 errors.hospitalName ? "input-error" : ""
               }`}
-              defaultValue={data.hospitalName}
+              defaultValue={getData.hospitalName}
             />
             {errors.hospitalName && (
               <p className="text-error mt-2">This field is required</p>
@@ -140,7 +156,7 @@ const MyDonationEdit = () => {
               className={`input input-bordered w-full ${
                 errors.fullAddressLine ? "input-error" : ""
               }`}
-              defaultValue={data.fullAddressLine}
+              defaultValue={getData.fullAddressLine}
             />
             {errors.fullAddressLine && (
               <p className="text-error mt-2">This field is required</p>
@@ -173,7 +189,7 @@ const MyDonationEdit = () => {
               className={`input input-bordered w-full ${
                 errors.donationTime ? "input-error" : ""
               }`}
-              defaultValue={data.donationTime}
+              defaultValue={getData.donationTime}
             />
             {errors.donationTime && (
               <p className="text-error mt-2">This field is required</p>
@@ -189,7 +205,7 @@ const MyDonationEdit = () => {
               className={`textarea textarea-bordered w-full ${
                 errors.requestMessage ? "textarea-error" : ""
               }`}
-              defaultValue={data.requestMessage}
+              defaultValue={getData.requestMessage}
             />
             {errors.requestMessage && (
               <p className="text-error mt-2">This field is required</p>
