@@ -7,7 +7,12 @@ const Profile = () => {
   const { user } = useContext(AuthContext);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  const [isDisable, setIsDisable] = useState(true);
   console.log(user);
+
+  const enableButton = () => {
+    setIsDisable(false);
+  };
 
   const fetchData = useCallback(() => {
     setLoading(true);
@@ -85,6 +90,12 @@ const Profile = () => {
                           {res.blood}
                         </div>
                       </h2>
+                      <button
+                        onClick={enableButton}
+                        className="btn btn-neutral"
+                      >
+                        edit
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -93,7 +104,12 @@ const Profile = () => {
           </div>
         </div>
         <div className="w-full">
-          <UpdateProfile data={data} onUpdate={fetchData}></UpdateProfile>
+          <UpdateProfile
+            isDisable={isDisable}
+            data={data}
+            onUpdate={fetchData}
+            setIsDisable={setIsDisable}
+          ></UpdateProfile>
         </div>
       </div>
     );
