@@ -13,7 +13,7 @@ import Login from "./Pages/Login.jsx";
 import Dashboard from "./Layout/Dashboard.jsx";
 import PrivateRoute from "./Firebase/PrivateRoute.jsx";
 import Profile from "./Dashboard/Profile.jsx";
-import DonationRequest from "./Dashboard/DonationRequest.jsx";
+import MyDonationRequest from "./Dashboard/MyDonationRequest.jsx";
 import CreateDRequest from "./Dashboard/CreateDRequest.jsx";
 import AllUsers from "./Dashboard/AllUsers.jsx";
 import AllBloodDonationReq from "./Dashboard/AllBloodDonationReq.jsx";
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <SearchDonor></SearchDonor>,
       },
       {
-        path: "/donationRequests",
+        path: "/MyDonationRequests",
         element: <Request></Request>,
       },
       {
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "my-donation-request",
-        element: <DonationRequest></DonationRequest>,
+        element: <MyDonationRequest></MyDonationRequest>,
       },
       {
         path: "create-donation-request",
