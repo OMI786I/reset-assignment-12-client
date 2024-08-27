@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { FaFile, FaSearch } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const MyDonationRequest = () => {
   const [data, setData] = useState([]);
@@ -54,13 +55,15 @@ const MyDonationRequest = () => {
                 </td>
                 <td>{res.donationDate}</td>
                 <td>{res.donationTime}</td>
-                <td>status</td>
+                <td>{res.donationStatus}</td>
                 <td>donor Information</td>
                 <td>
-                  <button className="btn btn-neutral">
-                    <FaFile />
-                    Edit
-                  </button>
+                  <Link to={`/dashboard/myDonationEdit/${res._id}`}>
+                    <button className="btn btn-neutral">
+                      <FaFile />
+                      Edit
+                    </button>
+                  </Link>
                 </td>
                 <td>
                   <button className="btn btn-neutral">

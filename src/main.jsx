@@ -18,6 +18,7 @@ import CreateDRequest from "./Dashboard/CreateDRequest.jsx";
 import AllUsers from "./Dashboard/AllUsers.jsx";
 import AllBloodDonationReq from "./Dashboard/AllBloodDonationReq.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MyDonationEdit from "./Dashboard/MyDonationEdit.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -77,6 +78,12 @@ const router = createBrowserRouter([
       {
         path: "all-users",
         element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "myDonationEdit/:id",
+        element: <MyDonationEdit></MyDonationEdit>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/requestDonor/${params.id}`),
       },
     ],
   },

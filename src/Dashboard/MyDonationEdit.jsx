@@ -1,12 +1,13 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../Provider/AuthProvider";
+import { useLoaderData } from "react-router-dom";
 import useLocationSelector from "../CustomHook/useLocationSelector";
-import toast from "react-hot-toast";
+import axios from "axios";
 
-const CreateDRequest = () => {
-  const donationStatus = "pending";
+const MyDonationEdit = () => {
+  const data = useLoaderData();
+  const [loading, setLoading] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -42,92 +43,18 @@ const CreateDRequest = () => {
     const chika = districtData.find((data2) => data2.id === data.districtId);
     const district = chika.name;
     console.log(district);
-    const submitData = { ...data, district, donationStatus };
+    const submitData = { ...data, district };
     console.log(submitData);
-
-    axios
-      .post("http://localhost:5000/requestDonor", submitData)
-      .then((response) => {
-        if (response.data.insertedId) {
-          toast.success("You have successfully added");
-        }
-        console.log(response);
-      })
-      .catch((error) => {
-        toast.error("There was an error adding the data");
-        console.log(error);
-      });
   };
-  const [data, setData] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-  const { user } = useContext(AuthContext);
-  console.log(data);
-
-  // Check if the current route path is the dashboard root
-  useEffect(() => {
-    setLoading(true);
-
-    axios
-      .get(`http://localhost:5000/donor?email=${user.email}`)
-      .then((assignment) => {
-        setData(assignment.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, [user.email]);
-
-  if (data.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  } else
-    return (
+  return (
+    <div>
+      <h1 className="text-3xl text-center p-2"></h1>
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-6 bg-base-200 rounded-lg shadow-md"
         >
-          <h1 className="text-3xl text-center">Create Donation Request Page</h1>
-          {/* Read-only fields */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text">Requester Name</span>
-            </label>
-            <input
-              type="text"
-              readOnly
-              {...register("requesterName")}
-              className="input input-bordered w-full"
-              value={data[0].name}
-            />
-          </div>
-
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text">Requester Email</span>
-            </label>
-            <input
-              type="email"
-              readOnly
-              {...register("requesterEmail")}
-              className="input input-bordered w-full"
-              value={data[0].email}
-            />
-          </div>
+          <h1 className="text-3xl text-center">Edit Donation Request Page</h1>
 
           {/* Editable fields */}
           <div className="form-control mb-4">
@@ -140,6 +67,7 @@ const CreateDRequest = () => {
               className={`input input-bordered w-full ${
                 errors.recipientName ? "input-error" : ""
               }`}
+              defaultValue={data.recipientName}
             />
             {errors.recipientName && (
               <p className="text-error mt-2">This field is required</p>
@@ -195,6 +123,7 @@ const CreateDRequest = () => {
               className={`input input-bordered w-full ${
                 errors.hospitalName ? "input-error" : ""
               }`}
+              defaultValue={data.hospitalName}
             />
             {errors.hospitalName && (
               <p className="text-error mt-2">This field is required</p>
@@ -211,6 +140,7 @@ const CreateDRequest = () => {
               className={`input input-bordered w-full ${
                 errors.fullAddressLine ? "input-error" : ""
               }`}
+              defaultValue={data.fullAddressLine}
             />
             {errors.fullAddressLine && (
               <p className="text-error mt-2">This field is required</p>
@@ -243,6 +173,7 @@ const CreateDRequest = () => {
               className={`input input-bordered w-full ${
                 errors.donationTime ? "input-error" : ""
               }`}
+              defaultValue={data.donationTime}
             />
             {errors.donationTime && (
               <p className="text-error mt-2">This field is required</p>
@@ -258,6 +189,7 @@ const CreateDRequest = () => {
               className={`textarea textarea-bordered w-full ${
                 errors.requestMessage ? "textarea-error" : ""
               }`}
+              defaultValue={data.requestMessage}
             />
             {errors.requestMessage && (
               <p className="text-error mt-2">This field is required</p>
@@ -269,7 +201,8 @@ const CreateDRequest = () => {
           </button>
         </form>
       </div>
-    );
+    </div>
+  );
 };
 
-export default CreateDRequest;
+export default MyDonationEdit;
