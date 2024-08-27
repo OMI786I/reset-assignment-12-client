@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
+import UpdateProfile from "../Component/Dashboard/UpdateProfile";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -81,15 +82,15 @@ const Profile = () => {
                           {res.blood}
                         </div>
                       </h2>
-                      <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Watch</button>
-                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <UpdateProfile></UpdateProfile>
         </div>
       </div>
     );
