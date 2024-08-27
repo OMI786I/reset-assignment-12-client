@@ -36,7 +36,7 @@ const Profile = () => {
       <div>
         <div>
           <div
-            className="relative h-[256px] bg-gradient-to-r
+            className="relative h-[240px] bg-gradient-to-r
                 from-blue-400 to-purple-500 "
           >
             {/**overlay */}
@@ -90,7 +90,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="w-full">
-          <UpdateProfile></UpdateProfile>
+          <UpdateProfile data={data}></UpdateProfile>
         </div>
       </div>
     );

@@ -3,8 +3,11 @@ import useLocationSelector from "../../CustomHook/useLocationSelector";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
-const UpdateProfile = () => {
+const UpdateProfile = ({ data }) => {
+  const [{ name, blood, district, upazilla, image, _id }] = data;
+  console.log(data);
   const [loading, setLoading] = useState(true);
   const [districtData, setdistrictData] = useState();
   const {
@@ -16,7 +19,6 @@ const UpdateProfile = () => {
   const { districts, filteredUpazillas, filterUpazillas } =
     useLocationSelector();
 
-  const [searchData, setSearchData] = useState();
   const selectedDistrict = watch("districtId");
   useEffect(() => {
     setLoading(true);
@@ -41,15 +43,26 @@ const UpdateProfile = () => {
     const district = chika.name;
     const submitData = { ...data, district };
     console.log(submitData);
-    setSearchData(submitData);
+    axios
+      .put(`http://localhost:5000/donor/${_id}`, submitData)
+      .then((response) => {
+        if (response.data.modifiedCount > 0) {
+          toast.success("You have successfully updated");
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        toast.error("There was an error updated the data");
+        console.log(error);
+      });
   };
 
   return (
-    <div className=" flex justify-center bg-gray-200">
+    <div className=" card flex justify-center bg-gray-200">
       <div className=" bg-base-100 w-full shadow-2xl md:w-1/2">
         <h1 className="font-bold text-3xl text-center p-3">Update Profile</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-          <div className="flex gap-2">
+          <div className=" gap-2">
             <div className="">
               <label className="label">
                 <span className="label-text">Name</span>
@@ -60,23 +73,11 @@ const UpdateProfile = () => {
                 placeholder="Name"
                 className="input input-bordered"
                 name="name"
-              />
-            </div>
-
-            <div className="">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                {...register("email", { required: true })}
-                placeholder="Email"
-                className="input input-bordered"
-                name="email"
+                defaultValue={name}
               />
             </div>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className=" gap-2 items-center">
             <div className="">
               <label className="label">
                 <span className="label-text">Blood Group</span>
@@ -130,7 +131,7 @@ const UpdateProfile = () => {
               </select>
             </div>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className=" gap-2 items-center">
             {" "}
             <div className=" w-full ">
               <div className="label">
@@ -141,6 +142,7 @@ const UpdateProfile = () => {
                 {...register("image", { required: true })}
                 type="text"
                 className=" input input-bordered"
+                defaultValue={image}
               />
             </div>
             <div className=" mt-6">
