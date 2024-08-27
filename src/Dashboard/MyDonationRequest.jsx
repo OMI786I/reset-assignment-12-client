@@ -4,11 +4,41 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { FaFile, FaSearch } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const MyDonationRequest = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:5000/requestDonor/${id}`).then((res) => {
+          console.log(res);
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            const remaining = data.filter((data) => data._id !== id);
+            setData(remaining);
+          } else toast.error("There was an error");
+        });
+      }
+    });
+  };
+
   console.log(data);
   useEffect(() => {
     setLoading(true);
@@ -66,7 +96,10 @@ const MyDonationRequest = () => {
                   </Link>
                 </td>
                 <td>
-                  <button className="btn btn-neutral">
+                  <button
+                    className="btn btn-neutral"
+                    onClick={() => handleDelete(res._id)}
+                  >
                     <FaDeleteLeft />
                     Delete
                   </button>
