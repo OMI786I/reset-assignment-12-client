@@ -22,6 +22,7 @@ import MyDonationEdit from "./Dashboard/MyDonationEdit.jsx";
 import MyDonationDetails from "./Dashboard/MyDonationDetails.jsx";
 import AdminDashboard from "./Dashboard/AdminDashboard.jsx";
 import AdminDonationEdit from "./Dashboard/AdminDonationEdit.jsx";
+import ContentManagement from "./Dashboard/ContentManagement.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "content-management",
-        element: <AllBloodDonationReq></AllBloodDonationReq>,
+        element: <ContentManagement></ContentManagement>,
       },
       {
         path: "all-users",
