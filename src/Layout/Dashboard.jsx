@@ -88,6 +88,13 @@ const Dashboard = () => {
               </li>
             </>
           )}
+          <div className="divider divider-warning text-white"></div>
+          <li>
+            <NavLink to={"/"} className="flex items-center">
+              <FaHome className="mr-2" />
+              Home
+            </NavLink>
+          </li>
         </ul>
       </div>
 
