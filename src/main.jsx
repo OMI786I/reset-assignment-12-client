@@ -21,6 +21,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MyDonationEdit from "./Dashboard/MyDonationEdit.jsx";
 import MyDonationDetails from "./Dashboard/MyDonationDetails.jsx";
 import AdminDashboard from "./Dashboard/AdminDashboard.jsx";
+import AdminDonationEdit from "./Dashboard/AdminDonationEdit.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -88,6 +89,12 @@ const router = createBrowserRouter([
       {
         path: "myDonationEdit/:id",
         element: <MyDonationEdit></MyDonationEdit>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/requestDonor/${params.id}`),
+      },
+      {
+        path: "adminDonationEdit/:id",
+        element: <AdminDonationEdit></AdminDonationEdit>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/requestDonor/${params.id}`),
       },

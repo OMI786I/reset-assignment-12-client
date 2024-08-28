@@ -11,7 +11,12 @@ const AllUsers = () => {
   });
   console.log(data);
 
-  if (isPending) return "Loading...";
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
 
   if (error) return "An error has occurred: " + error.message;
 
