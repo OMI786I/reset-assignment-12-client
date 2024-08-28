@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const ContentManagement = () => {
   const { isPending, error, data, refetch } = useQuery({
@@ -12,6 +13,31 @@ const ContentManagement = () => {
   });
   console.log(data);
 
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:5000/blog/${id}`).then((res) => {
+          console.log(res);
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          } else toast.error("There was an error");
+        });
+      }
+    });
+  };
   const handleUpdate = (id, change) => {
     console.log(id);
 
@@ -73,21 +99,29 @@ const ContentManagement = () => {
                 {res.content}
               </p>
             </div>
-            {res.status === "draft" ? (
+            <div className="flex gap-2 p-2">
+              {res.status === "draft" ? (
+                <button
+                  className="btn btn-neutral"
+                  onClick={() => handleUpdate(res._id, "published")}
+                >
+                  Publish
+                </button>
+              ) : (
+                <button
+                  className="btn btn-neutral"
+                  onClick={() => handleUpdate(res._id, "draft")}
+                >
+                  Unpublish
+                </button>
+              )}
               <button
-                className="btn btn-neutral"
-                onClick={() => handleUpdate(res._id, "published")}
+                onClick={() => handleDelete(res._id)}
+                className="btn btn-error text-white"
               >
-                Publish
+                Delete
               </button>
-            ) : (
-              <button
-                className="btn btn-neutral"
-                onClick={() => handleUpdate(res._id, "draft")}
-              >
-                Unpublish
-              </button>
-            )}
+            </div>
           </div>
         ))}
       </div>
