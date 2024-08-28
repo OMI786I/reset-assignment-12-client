@@ -13,6 +13,7 @@ import DashboardWelc from "../Dashboard/DashboardWelc";
 const Dashboard = () => {
   const location = useLocation();
   const isDashboardRoot = location.pathname === "/dashboard";
+  const isAdmin = true;
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -49,30 +50,40 @@ const Dashboard = () => {
               Create Donation Request
             </NavLink>
           </li>
-          <li>
-            <NavLink to={"/dashboard/all-users"} className="flex items-center">
-              <TbUser className="mr-2" />
-              All Users
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/all-blood-donation-requests"}
-              className="flex items-center"
-            >
-              <TbBrandBooking className="mr-2" />
-              All blood donation requests
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/content-management"}
-              className="flex items-center"
-            >
-              <TbDashboard className="mr-2" />
-              Content management
-            </NavLink>
-          </li>
+
+          {isAdmin ? (
+            <>
+              <li>
+                <NavLink
+                  to={"/dashboard/all-users"}
+                  className="flex items-center"
+                >
+                  <TbUser className="mr-2" />
+                  All Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/all-blood-donation-requests"}
+                  className="flex items-center"
+                >
+                  <TbBrandBooking className="mr-2" />
+                  All blood donation requests
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/content-management"}
+                  className="flex items-center"
+                >
+                  <TbDashboard className="mr-2" />
+                  Content management
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            ""
+          )}
         </ul>
       </div>
 
