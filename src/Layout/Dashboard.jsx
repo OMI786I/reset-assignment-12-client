@@ -1,21 +1,19 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { FaCalendar, FaShoppingCart } from "react-icons/fa";
+import { FaCalendar } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
-import { MdOutlineReviews } from "react-icons/md";
 import { TbBrandBooking, TbDashboard, TbUser } from "react-icons/tb";
 import { IoIosDocument } from "react-icons/io";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../Provider/AuthProvider";
 import { RxDashboard } from "react-icons/rx";
 import { Toaster } from "react-hot-toast";
-import axios from "axios";
 import DashboardWelc from "../Dashboard/DashboardWelc";
 import useAdmin from "../CustomHook/useAdmin";
+import useVolunteer from "../CustomHook/useVolunteer";
 const Dashboard = () => {
   const location = useLocation();
   const isDashboardRoot = location.pathname === "/dashboard";
   const [isAdmin] = useAdmin();
-
+  const { isVolunteer } = useVolunteer();
+  console.log(isVolunteer);
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Sidebar */}
