@@ -15,7 +15,7 @@ const AllUsers = () => {
 
   if (error) return "An error has occurred: " + error.message;
 
-  const handleAdmin = (id) => {
+  const handleRole = (id, roleName) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -26,17 +26,19 @@ const AllUsers = () => {
       confirmButtonText: "Yes, Make Admin!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:5000/donor/admin/${id}`).then((res) => {
-          console.log(res);
-          if (res.data.modifiedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "User is Successfully made admin.",
-              icon: "success",
-            });
-          } else toast.error("There was an error");
-        });
+        axios
+          .put(`http://localhost:5000/donor/admin/${id}`, { role: roleName })
+          .then((res) => {
+            console.log(res);
+            if (res.data.modifiedCount > 0) {
+              refetch();
+              Swal.fire({
+                title: `Made ${roleName}!`,
+                text: `User is Successfully made ${roleName}.`,
+                icon: "success",
+              });
+            } else toast.error("There was an error");
+          });
       }
     });
   };
@@ -94,16 +96,33 @@ const AllUsers = () => {
                     )}
                   </th>
                   <th>
-                    <button className="btn btn-neutral mx-3">
-                      Make Volunteer
-                    </button>
+                    {res.role === "volunteer" ? (
+                      <button
+                        onClick={() => handleRole(res._id, "")}
+                        className="btn btn-neutral mx-3"
+                      >
+                        Un Volunteer
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleRole(res._id, "volunteer")}
+                        className="btn btn-neutral mx-3"
+                      >
+                        Make volunteer
+                      </button>
+                    )}
                   </th>
                   <th>
                     {res.role === "admin" ? (
-                      ""
+                      <button
+                        onClick={() => handleRole(res._id, "")}
+                        className="btn btn-neutral mx-3"
+                      >
+                        Un admin
+                      </button>
                     ) : (
                       <button
-                        onClick={() => handleAdmin(res._id)}
+                        onClick={() => handleRole(res._id, "admin")}
                         className="btn btn-neutral mx-3"
                       >
                         Make Admin
