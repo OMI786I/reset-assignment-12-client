@@ -2,12 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../CustomHook/useAxiosSecure";
 
 const AllUsers = () => {
+  const axiosSecure = useAxiosSecure();
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
-    queryFn: () =>
-      fetch("http://localhost:5000/donor").then((res) => res.json()),
+    queryFn: async () => {
+      const res = await axiosSecure.get("/donor", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("access-token")}`,
+        },
+      });
+      return res.data;
+    },
   });
   console.log(data);
 
