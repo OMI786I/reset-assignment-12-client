@@ -1,14 +1,35 @@
 import { Link } from "react-router-dom";
 
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ContentManagement = () => {
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
       fetch("http://localhost:5000/blog").then((res) => res.json()),
   });
   console.log(data);
+
+  const handleUpdate = (id, change) => {
+    console.log(id);
+
+    //update operation
+    axios
+      .patch(`http://localhost:5000/blog/${id}`, { status: change })
+      .then((response) => {
+        refetch();
+        if (response.data.modifiedCount > 0) {
+          toast.success("You have successfully updated");
+        }
+      })
+      .catch((error) => {
+        toast.error("There was an error updated the data");
+        console.log(error);
+      });
+  };
+
   if (isPending)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -52,6 +73,21 @@ const ContentManagement = () => {
                 {res.content}
               </p>
             </div>
+            {res.status === "draft" ? (
+              <button
+                className="btn btn-neutral"
+                onClick={() => handleUpdate(res._id, "published")}
+              >
+                Publish
+              </button>
+            ) : (
+              <button
+                className="btn btn-neutral"
+                onClick={() => handleUpdate(res._id, "draft")}
+              >
+                Unpublish
+              </button>
+            )}
           </div>
         ))}
       </div>
