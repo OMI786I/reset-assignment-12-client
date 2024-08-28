@@ -9,11 +9,7 @@ const AllUsers = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/donor", {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("access-token")}`,
-        },
-      });
+      const res = await axiosSecure.get("/donor");
       return res.data;
     },
   });

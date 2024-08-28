@@ -10,10 +10,11 @@ import { RxDashboard } from "react-icons/rx";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import DashboardWelc from "../Dashboard/DashboardWelc";
+import useAdmin from "../CustomHook/useAdmin";
 const Dashboard = () => {
   const location = useLocation();
   const isDashboardRoot = location.pathname === "/dashboard";
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
