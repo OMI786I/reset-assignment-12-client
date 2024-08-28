@@ -23,6 +23,7 @@ import MyDonationDetails from "./Dashboard/MyDonationDetails.jsx";
 import AdminDashboard from "./Dashboard/AdminDashboard.jsx";
 import AdminDonationEdit from "./Dashboard/AdminDonationEdit.jsx";
 import ContentManagement from "./Dashboard/ContentManagement.jsx";
+import BlogForm from "./Dashboard/BlogForm.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "all-users",
         element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "blogForm",
+        element: <BlogForm></BlogForm>,
       },
       {
         path: "myDonationEdit/:id",
