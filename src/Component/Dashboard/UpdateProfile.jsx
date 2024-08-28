@@ -67,104 +67,98 @@ const UpdateProfile = ({ data, onUpdate, isDisable, setIsDisable }) => {
     );
   } else
     return (
-      <div className=" card flex justify-center bg-gray-200">
-        <div className=" bg-base-100 w-full shadow-2xl md:w-1/2">
+      <div className="flex justify-center items-center  ">
+        <div className="card w-full max-w-md md:max-w-lg lg:max-w-xl bg-base-100 shadow-2xl">
           <h1 className="font-bold text-3xl text-center p-3">Update Profile</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <div className=" gap-2">
-              <div className="">
-                <label className="label">
-                  <span className="label-text">Name</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("name")}
-                  placeholder="Name"
-                  className="input input-bordered"
-                  name="name"
-                  defaultValue={name}
-                  disabled={isDisable}
-                />
-              </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                {...register("name")}
+                placeholder="Name"
+                className="input input-bordered"
+                name="name"
+                defaultValue={name}
+                disabled={isDisable}
+              />
             </div>
-            <div className=" gap-2 items-center">
-              <div className="">
-                <label className="label">
-                  <span className="label-text">Blood Group</span>
-                </label>
-                <select
-                  {...register("blood")}
-                  className="select select-bordered w-full max-w-xs"
-                  disabled={isDisable}
-                >
-                  <option value="">Select a blood Group</option>
-                  <option value={"A+"}>A+</option>
-                  <option value={"A-"}>A-</option>
-                  <option value={"B+"}>B+</option>
-                  <option value={"B-"}>B-</option>
-                  <option value={"O+"}>O+</option>
-                  <option value={"O-"}>O-</option>
-                  <option value={"AB+"}>AB+</option>
-                  <option value={"AB-"}>AB-</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="districtId">District:</label>
-                <select
-                  id="districtId"
-                  {...register("districtId")}
-                  className="input input-bordered"
-                  disabled={isDisable}
-                >
-                  <option value="">Select district</option>
-                  {districts.map((district) => (
-                    <option key={district.id} value={district.id}>
-                      {district.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="upazilla">Upazilla:</label>
-                <select
-                  id="upazilla"
-                  {...register("upazilla")}
-                  className="input input-bordered"
-                  disabled={!selectedDistrict}
-                >
-                  <option value="">Select upazilla</option>
-                  {filteredUpazillas.map((upazilla) => (
-                    <option key={upazilla.id} value={upazilla.name}>
-                      {upazilla.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Blood Group</span>
+              </label>
+              <select
+                {...register("blood")}
+                className="select select-bordered w-full"
+                disabled={isDisable}
+              >
+                <option value="">Select a blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
             </div>
-            <div className=" gap-2 items-center">
-              {" "}
-              <div className=" w-full ">
-                <div className="label">
-                  <label className="label-text">image url</label>
-                </div>
-
-                <input
-                  {...register("image")}
-                  type="text"
-                  className=" input input-bordered"
-                  defaultValue={image}
-                  disabled={isDisable}
-                />
-              </div>
-              <div className=" mt-6">
-                <input
-                  className="btn btn-neutral"
-                  type="submit"
-                  value="Update"
-                />
-              </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">District</span>
+              </label>
+              <select
+                id="districtId"
+                {...register("districtId")}
+                className="input input-bordered"
+                disabled={isDisable}
+              >
+                <option value="">Select district</option>
+                {districts.map((district) => (
+                  <option key={district.id} value={district.id}>
+                    {district.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Upazilla</span>
+              </label>
+              <select
+                id="upazilla"
+                {...register("upazilla")}
+                className="input input-bordered"
+                disabled={!selectedDistrict}
+              >
+                <option value="">Select upazilla</option>
+                {filteredUpazillas.map((upazilla) => (
+                  <option key={upazilla.id} value={upazilla.name}>
+                    {upazilla.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Image URL</span>
+              </label>
+              <input
+                {...register("image")}
+                type="text"
+                className="input input-bordered"
+                defaultValue={image}
+                disabled={isDisable}
+              />
+            </div>
+            <div className="form-control">
+              <input
+                className="btn btn-neutral w-full"
+                type="submit"
+                value="Update"
+              />
             </div>
           </form>
         </div>
