@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const BlogForm = () => {
   const {
@@ -9,6 +11,20 @@ const BlogForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    const status = "draft";
+    const submitData = { ...data, status };
+    axios
+      .post("http://localhost:5000/blog", submitData)
+      .then((response) => {
+        if (response.data.insertedId) {
+          toast.success("You have successfully added");
+        }
+        console.log(response);
+      })
+      .catch((error) => {
+        toast.error("There was an error adding the data");
+        console.log(error);
+      });
   };
 
   return (
@@ -40,6 +56,7 @@ const BlogForm = () => {
           </span>
         </label>
         <input
+          {...register("image", { required: "image is required" })}
           type="text"
           id="thumbnail"
           className="input input-bordered"
