@@ -105,10 +105,12 @@ const MyDonationRequest = () => {
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-neutral">
-                    <FaSearch />
-                    View
-                  </button>
+                  <Link to={`/dashboard/myDonationDetails/${res._id}`}>
+                    <button className="btn btn-neutral">
+                      <FaSearch />
+                      View
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}
