@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 import RecentDonation from "../Component/Dashboard/RecentDonation";
+import AdminCard from "../Component/Dashboard/AdminCard";
 
 const DashboardWelc = ({ isAdmin }) => {
   const [data, setData] = useState([]);
@@ -78,7 +79,9 @@ const DashboardWelc = ({ isAdmin }) => {
             <RecentDonation></RecentDonation>
           </div>
         ) : (
-          ""
+          <div>
+            <AdminCard></AdminCard>
+          </div>
         )}
       </div>
     );
