@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const BlogForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,6 +20,7 @@ const BlogForm = () => {
       .then((response) => {
         if (response.data.insertedId) {
           toast.success("You have successfully added");
+          navigate("/dashboard/content-management");
         }
         console.log(response);
       })
