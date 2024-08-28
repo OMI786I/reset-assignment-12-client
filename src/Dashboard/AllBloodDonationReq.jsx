@@ -5,8 +5,10 @@ import { FaFile, FaSearch } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useVolunteer from "../CustomHook/useVolunteer";
 
 const AllBloodDonationReq = () => {
+  const { isVolunteer } = useVolunteer();
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
@@ -91,15 +93,20 @@ const AllBloodDonationReq = () => {
                       </button>
                     </Link>
                   </td>
-                  <td>
-                    <button
-                      className="btn btn-neutral"
-                      onClick={() => handleDelete(res._id)}
-                    >
-                      <FaDeleteLeft />
-                      Delete
-                    </button>
-                  </td>
+                  {!isVolunteer ? (
+                    <td>
+                      <button
+                        className="btn btn-neutral"
+                        onClick={() => handleDelete(res._id)}
+                      >
+                        <FaDeleteLeft />
+                        Delete
+                      </button>
+                    </td>
+                  ) : (
+                    ""
+                  )}
+
                   <td>
                     <Link to={`/dashboard/myDonationDetails/${res._id}`}>
                       <button className="btn btn-neutral">

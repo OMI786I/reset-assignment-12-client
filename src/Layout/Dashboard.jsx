@@ -26,17 +26,22 @@ const Dashboard = () => {
             </NavLink>
           </li>
 
-          {isAdmin ? (
+          {isAdmin || isVolunteer ? (
             <>
-              <li>
-                <NavLink
-                  to={"/dashboard/all-users"}
-                  className="flex items-center"
-                >
-                  <TbUser className="mr-2" />
-                  All Users
-                </NavLink>
-              </li>
+              {isAdmin ? (
+                <li>
+                  <NavLink
+                    to={"/dashboard/all-users"}
+                    className="flex items-center"
+                  >
+                    <TbUser className="mr-2" />
+                    All Users
+                  </NavLink>
+                </li>
+              ) : (
+                ""
+              )}
+
               <li>
                 <NavLink
                   to={"/dashboard/all-blood-donation-requests"}

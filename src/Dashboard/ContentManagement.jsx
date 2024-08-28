@@ -4,8 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import useVolunteer from "../CustomHook/useVolunteer";
 
 const ContentManagement = () => {
+  const { isVolunteer } = useVolunteer();
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
@@ -99,29 +101,33 @@ const ContentManagement = () => {
                 {res.content}
               </p>
             </div>
-            <div className="flex gap-2 p-2">
-              {res.status === "draft" ? (
+            {!isVolunteer ? (
+              <div className="flex gap-2 p-2">
+                {res.status === "draft" ? (
+                  <button
+                    className="btn btn-neutral"
+                    onClick={() => handleUpdate(res._id, "published")}
+                  >
+                    Publish
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-neutral"
+                    onClick={() => handleUpdate(res._id, "draft")}
+                  >
+                    Unpublish
+                  </button>
+                )}
                 <button
-                  className="btn btn-neutral"
-                  onClick={() => handleUpdate(res._id, "published")}
+                  onClick={() => handleDelete(res._id)}
+                  className="btn btn-error text-white"
                 >
-                  Publish
+                  Delete
                 </button>
-              ) : (
-                <button
-                  className="btn btn-neutral"
-                  onClick={() => handleUpdate(res._id, "draft")}
-                >
-                  Unpublish
-                </button>
-              )}
-              <button
-                onClick={() => handleDelete(res._id)}
-                className="btn btn-error text-white"
-              >
-                Delete
-              </button>
-            </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         ))}
       </div>
