@@ -26,30 +26,6 @@ const Dashboard = () => {
               Dashboard
             </NavLink>
           </li>
-          <li>
-            <NavLink to={"/dashboard/profile"} className="flex items-center">
-              <FaHome className="mr-2" />
-              Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/my-donation-request"}
-              className="flex items-center"
-            >
-              <FaCalendar className="mr-2" />
-              My Donation Request
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"/dashboard/create-donation-request"}
-              className="flex items-center"
-            >
-              <IoIosDocument className="mr-2" />
-              Create Donation Request
-            </NavLink>
-          </li>
 
           {isAdmin ? (
             <>
@@ -82,14 +58,42 @@ const Dashboard = () => {
               </li>
             </>
           ) : (
-            ""
+            <>
+              <li>
+                <NavLink
+                  to={"/dashboard/profile"}
+                  className="flex items-center"
+                >
+                  <FaHome className="mr-2" />
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/my-donation-request"}
+                  className="flex items-center"
+                >
+                  <FaCalendar className="mr-2" />
+                  My Donation Request
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={"/dashboard/create-donation-request"}
+                  className="flex items-center"
+                >
+                  <IoIosDocument className="mr-2" />
+                  Create Donation Request
+                </NavLink>
+              </li>
+            </>
           )}
         </ul>
       </div>
 
       {/* Dashboard content */}
       <div className="flex-1 w-full md:w-[80%] text-xs md:text-[14px] lg:text-lg overflow-y-auto">
-        {isDashboardRoot && <DashboardWelc />}
+        {isDashboardRoot && <DashboardWelc isAdmin={isAdmin} />}
         <Toaster />
         <Outlet />
       </div>

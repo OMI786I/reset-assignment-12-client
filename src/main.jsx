@@ -20,6 +20,7 @@ import AllBloodDonationReq from "./Dashboard/AllBloodDonationReq.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MyDonationEdit from "./Dashboard/MyDonationEdit.jsx";
 import MyDonationDetails from "./Dashboard/MyDonationDetails.jsx";
+import AdminDashboard from "./Dashboard/AdminDashboard.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "all-blood-donation-requests",
         element: <AllBloodDonationReq></AllBloodDonationReq>,
+      },
+      {
+        path: "adminDashboard",
+        element: <AdminDashboard />,
       },
       {
         path: "content-management",
