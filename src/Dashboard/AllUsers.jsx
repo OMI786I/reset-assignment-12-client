@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
       fetch("http://localhost:5000/donor").then((res) => res.json()),
@@ -11,6 +14,32 @@ const AllUsers = () => {
   if (isPending) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
+
+  const handleAdmin = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Make Admin!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:5000/donor/admin/${id}`).then((res) => {
+          console.log(res);
+          if (res.data.modifiedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "User is Successfully made admin.",
+              icon: "success",
+            });
+          } else toast.error("There was an error");
+        });
+      }
+    });
+  };
 
   return (
     <div>
@@ -55,7 +84,7 @@ const AllUsers = () => {
                     <br />
                   </td>
                   <td>{res.name}</td>
-                  <th>role</th>
+                  <th>{res.role ? res.role : "donor"}</th>
                   <th>{res.status}</th>
                   <th>
                     {res.status === "active" ? (
@@ -70,7 +99,16 @@ const AllUsers = () => {
                     </button>
                   </th>
                   <th>
-                    <button className="btn btn-neutral mx-3">Make Admin</button>
+                    {res.role === "admin" ? (
+                      ""
+                    ) : (
+                      <button
+                        onClick={() => handleAdmin(res._id)}
+                        className="btn btn-neutral mx-3"
+                      >
+                        Make Admin
+                      </button>
+                    )}
                   </th>
                 </tr>
               ))}
