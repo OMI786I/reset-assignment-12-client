@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
+import RecentDonation from "../Component/Dashboard/RecentDonation";
 
 const DashboardWelc = () => {
   const [data, setData] = useState([]);
@@ -63,12 +64,17 @@ const DashboardWelc = () => {
               rounded-lg shadow-lg"
             >
               <h1 className="text-3xl font-bold mb-4">
-                Welcome{data[0].name}{" "}
+                Welcome {data[0].name}{" "}
               </h1>
 
-              <p className="text-lg">Check Out Your Donation requests!</p>
+              <p className="text-lg">
+                Check Out Your latest Donation requests!
+              </p>
             </div>
           </div>
+        </div>
+        <div>
+          <RecentDonation></RecentDonation>
         </div>
       </div>
     );
