@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import app from "../Firebase/firebase.config.js";
+import axios from "axios";
 export const AuthContext = createContext(null);
 
 const auth = getAuth(app);
@@ -33,9 +34,22 @@ const AuthProvider = ({ children }) => {
       console.log("user in the auth state changed", currentUser);
       setUser(currentUser);
       if (currentUser) {
-        //get token and store client side
+        const userInfo = { email: currentUser.email };
+        axios
+          .post("http://localhost:5000/jwt", userInfo)
+          .then((response) => {
+            if (response.data.token) {
+              localStorage.setItem("access-token", response.data.token);
+              //toast.success("Your data is added to database");
+            }
+            console.log(response);
+          })
+          .catch((error) => {
+            //  toast.error("There was an error adding the data");
+            console.log(error);
+          });
       } else {
-        //to remove token
+        localStorage.removeItem("access-token");
       }
       setLoading(false);
     });
