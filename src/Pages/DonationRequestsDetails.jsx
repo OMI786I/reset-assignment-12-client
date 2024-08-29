@@ -1,10 +1,8 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useDonor from "../CustomHook/useDonor";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useState } from "react";
 const DonationRequestsDetails = () => {
   const navigate = useNavigate();
   const data = useLoaderData();
@@ -28,7 +26,7 @@ const DonationRequestsDetails = () => {
           navigate("/donationRequests");
           toast.success("Your data is stored");
           console.log(response);
-        }
+        } else toast.error("already requested");
       })
       .catch((error) => {
         toast.error("There was an error updated the data");
@@ -126,65 +124,77 @@ const DonationRequestsDetails = () => {
           </div>
         </div>
         {/* Open the modal using document.getElementById('ID').showModal() method */}
-        <button className="btn btn-neutral w-full" onClick={openModal}>
-          Donate
-        </button>
-        <dialog id="my_modal_2" className="modal">
-          <div className="modal-box">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-4"
-            >
-              {/* Donor Name Input */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-black">Donor Name</span>
-                </label>
-                <input
-                  {...register("donorName", { required: true })}
-                  className={`input input-bordered w-full ${
-                    errors.donorName ? "input-error" : ""
-                  }`}
-                  placeholder="Enter donor name..."
-                  value={donor.name}
-                />
-                {errors.donorName && (
-                  <span className="text-error mt-1">Name is required</span>
-                )}
-              </div>
 
-              {/* Donor Email Input */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-black">Donor Email</span>
-                </label>
-                <input
-                  {...register("donorEmail", { required: true })}
-                  className={`input input-bordered w-full ${
-                    errors.donorEmail ? "input-error" : ""
-                  }`}
-                  placeholder="Enter donor email..."
-                  value={donor.email}
-                />
-                {errors.donorEmail && (
-                  <span className="text-error mt-1">Email is required</span>
-                )}
-              </div>
+        {data.donorEmail && data.donorName ? (
+          ""
+        ) : (
+          <div>
+            {data.requesterEmail === donor.email ? (
+              ""
+            ) : (
+              <button className="btn btn-neutral w-full" onClick={openModal}>
+                Donate
+              </button>
+            )}
 
-              {/* Submit Button */}
-              <div className="form-control mt-6">
-                <input
-                  className="btn btn-neutral w-full"
-                  type="submit"
-                  value="Donate"
-                />
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-4"
+                >
+                  {/* Donor Name Input */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text text-black">Donor Name</span>
+                    </label>
+                    <input
+                      {...register("donorName", { required: true })}
+                      className={`input input-bordered w-full ${
+                        errors.donorName ? "input-error" : ""
+                      }`}
+                      placeholder="Enter donor name..."
+                      value={donor.name}
+                    />
+                    {errors.donorName && (
+                      <span className="text-error mt-1">Name is required</span>
+                    )}
+                  </div>
+
+                  {/* Donor Email Input */}
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text text-black">Donor Email</span>
+                    </label>
+                    <input
+                      {...register("donorEmail", { required: true })}
+                      className={`input input-bordered w-full ${
+                        errors.donorEmail ? "input-error" : ""
+                      }`}
+                      placeholder="Enter donor email..."
+                      value={donor.email}
+                    />
+                    {errors.donorEmail && (
+                      <span className="text-error mt-1">Email is required</span>
+                    )}
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="form-control mt-6">
+                    <input
+                      className="btn btn-neutral w-full"
+                      type="submit"
+                      value="Donate"
+                    />
+                  </div>
+                </form>
               </div>
-            </form>
+              <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+              </form>
+            </dialog>
           </div>
-          <form method="dialog" className="modal-backdrop">
-            <button>close</button>
-          </form>
-        </dialog>
+        )}
       </div>
     );
 };

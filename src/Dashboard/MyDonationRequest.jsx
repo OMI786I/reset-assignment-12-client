@@ -6,10 +6,10 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 const MyDonationRequest = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //const [data, setData] = useState([]);
   const { user } = useContext(AuthContext);
 
   const handleDelete = (id) => {
@@ -26,34 +26,70 @@ const MyDonationRequest = () => {
         axios.delete(`http://localhost:5000/requestDonor/${id}`).then((res) => {
           console.log(res);
           if (res.data.deletedCount > 0) {
+            refetch();
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",
               icon: "success",
             });
-            const remaining = data.filter((data) => data._id !== id);
-            setData(remaining);
           } else toast.error("There was an error");
         });
       }
     });
   };
 
-  console.log(data);
-  useEffect(() => {
-    setLoading(true);
+  const { isPending, error, data, refetch } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch(
+        `http://localhost:5000/requestDonor?requesterEmail=${user.email}`
+      ).then((res) => res.json()),
+  });
+
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+
+  if (error) return "An error has occurred: " + error.message;
+
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   axios
+  //     .get(`http://localhost:5000/requestDonor?requesterEmail=${user.email}`)
+  //     .then((assignment) => {
+  //       setData(assignment.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setLoading(false);
+  //     });
+  // }, [user.email]);
+
+  const handleStatus = (id, status) => {
+    console.log(id);
+    console.log(status);
+    const submitData = { donationStatus: status };
 
     axios
-      .get(`http://localhost:5000/requestDonor?requesterEmail=${user.email}`)
-      .then((assignment) => {
-        setData(assignment.data);
-        setLoading(false);
+      .patch(`http://localhost:5000/requestDonor/${id}`, submitData)
+      .then((response) => {
+        console.log(response);
+        if (response.data.modifiedCount > 0) {
+          refetch();
+          toast.success("Your data is updated");
+          console.log(response);
+        } else toast.error("already requested");
       })
       .catch((error) => {
-        console.error(error);
-        setLoading(false);
+        toast.error("There was an error updated the data");
+        console.log(error);
       });
-  }, [user.email]);
+  };
 
   return (
     <div>
@@ -85,8 +121,41 @@ const MyDonationRequest = () => {
                 </td>
                 <td>{res.donationDate}</td>
                 <td>{res.donationTime}</td>
-                <td>{res.donationStatus}</td>
-                <td>donor Information</td>
+                {res.donationStatus === "pending" ||
+                res.donationStatus === "cancel" ? (
+                  <td className="text-red-600">{res.donationStatus}</td>
+                ) : (
+                  <td className="text-yellow-500">{res.donationStatus}</td>
+                )}
+
+                {res.donorEmail && res.donorName ? (
+                  <td>
+                    <span className="font-bold">email:</span> {res.donorEmail},{" "}
+                    <br></br> <span className="font-bold">name:</span>{" "}
+                    {res.donorName}
+                    {res.donationStatus === "inprogress" ? (
+                      <div className="flex gap-2">
+                        <button
+                          className="btn btn-success btn-xs"
+                          onClick={() => handleStatus(res._id, "done")}
+                        >
+                          Done
+                        </button>
+                        <button
+                          className="btn btn-error btn-xs"
+                          onClick={() => handleStatus(res._id, "cancel")}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </td>
+                ) : (
+                  <td>No Donor</td>
+                )}
+
                 <td>
                   <Link to={`/dashboard/myDonationEdit/${res._id}`}>
                     <button className="btn btn-neutral">
