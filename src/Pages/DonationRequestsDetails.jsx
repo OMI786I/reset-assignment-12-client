@@ -1,8 +1,17 @@
 import { useLoaderData } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
 const DonationRequestsDetails = () => {
   const data = useLoaderData();
-  console.log(data);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-lg space-y-4 border border-gray-200 mt-10">
@@ -80,6 +89,68 @@ const DonationRequestsDetails = () => {
           </div>
         </div>
       </div>
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <button
+        className="btn btn-neutral w-full"
+        onClick={() => document.getElementById("my_modal_2").showModal()}
+      >
+        Donate
+      </button>
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-4"
+          >
+            {/* Example Input */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-black">Example Field</span>
+              </label>
+              <input
+                defaultValue="test"
+                {...register("example", { required: true })}
+                className={`input input-bordered w-full ${
+                  errors.example ? "input-error" : ""
+                }`}
+                placeholder="Enter something..."
+              />
+              {errors.example && (
+                <span className="text-error mt-1">This field is required</span>
+              )}
+            </div>
+
+            {/* Example Required Input */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-black">Required Field</span>
+              </label>
+              <input
+                {...register("exampleRequired", { required: true })}
+                className={`input input-bordered w-full ${
+                  errors.exampleRequired ? "input-error" : ""
+                }`}
+                placeholder="This is required..."
+              />
+              {errors.exampleRequired && (
+                <span className="text-error mt-1">This field is required</span>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <div className="form-control mt-6">
+              <input
+                className="btn btn-neutral w-full"
+                type="submit"
+                value="Register"
+              />
+            </div>
+          </form>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 };
