@@ -5,15 +5,24 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useVolunteer from "../CustomHook/useVolunteer";
+import { useState } from "react";
 
 const ContentManagement = () => {
   const { isVolunteer } = useVolunteer();
+  const [sortOrder, setSortOrder] = useState("");
   const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["repoData", sortOrder],
     queryFn: () =>
-      fetch("http://localhost:5000/blog").then((res) => res.json()),
+      fetch(`http://localhost:5000/blog?status=${sortOrder}`).then((res) =>
+        res.json()
+      ),
   });
   console.log(data);
+
+  const handleSort = (order) => {
+    setSortOrder(order);
+    console.log(order);
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -49,7 +58,7 @@ const ContentManagement = () => {
       .then((response) => {
         refetch();
         if (response.data.modifiedCount > 0) {
-          toast.success("You have successfully updated");
+          toast.success(`You have successfully made ${change}`);
         }
       })
       .catch((error) => {
@@ -69,6 +78,22 @@ const ContentManagement = () => {
 
   return (
     <div className="p-2">
+      <div className="text-center my-4">
+        <label htmlFor="sortOrder" className="font-bold mr-2">
+          FIlter by Status:
+        </label>
+        <select
+          id="sortOrder"
+          value={sortOrder}
+          onChange={(e) => handleSort(e.target.value)}
+          className="border rounded p-2"
+        >
+          <option value="">All</option>
+          <option value="draft">draft</option>
+          <option value="published">published</option>
+        </select>
+      </div>
+
       <h1 className="text-3xl text-center">Blogs Page</h1>
       <div className="flex justify-end">
         <Link to={"/dashboard/blogForm"}>

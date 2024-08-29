@@ -111,6 +111,7 @@ const AllBloodDonationReq = () => {
             <thead>
               <tr>
                 <th></th>
+                <th>Requester Email</th>
                 <th>Recipient Name</th>
                 <th>Recipient location</th>
                 <th>Donation Date</th>
@@ -127,6 +128,7 @@ const AllBloodDonationReq = () => {
               {data.map((res, index) => (
                 <tr key={res._id} className="bg-base-200">
                   <th>{index + 1}</th>
+                  <td>{res.requesterEmail}</td>
                   <td>{res.recipientName}</td>
                   <td>
                     {res.district} , {res.upazilla}
