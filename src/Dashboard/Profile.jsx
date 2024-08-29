@@ -42,67 +42,39 @@ const Profile = () => {
   } else
     return (
       <div>
-        <div>
+        {data.map((res) => (
           <div
-            className="relative md:h-[256px] lg:h-[300px] bg-gradient-to-r
-                from-blue-400 to-purple-500 "
+            key={res._id}
+            className="card my-5 card-side bg-base-100 shadow-xl"
           >
-            {/**overlay */}
-            <div
-              className="absolute inset-0 
-                    bg-gray-800 opacity-50 
-                    z-10"
-            ></div>
-            {/**background */}
-            <div
-              className="absolute inset-0 flex 
-                    items-center justify-center
-                    text-black z-20"
-            >
-              <div
-                className=" p-8 
-                        "
-              >
-                {data.map((res) => (
-                  <div
-                    key={res._id}
-                    className="card card-side bg-base-100 shadow-xl"
-                  >
-                    <figure>
-                      <img src={res.image} className="w-52" alt="Movie" />
-                    </figure>
-                    <div className="card-body">
-                      <h2 className="">
-                        <span className="font-bold">User Name: </span>
-                        {res.name}
-                      </h2>
-                      <h2 className="">
-                        <span className="font-bold">User Email: </span>
-                        {res.email}
-                      </h2>
-                      <h2 className="">
-                        <span className="font-bold">User Address: </span>
-                        {res.district}, {res.upazilla}
-                      </h2>
-                      <h2 className="">
-                        <span className="font-bold">Blood Group: </span>
-                        <div className="badge badge-error gap-2 text-white">
-                          {res.blood}
-                        </div>
-                      </h2>
-                      <button
-                        onClick={enableButton}
-                        className="btn btn-neutral"
-                      >
-                        edit
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <figure>
+              <img src={res.image} className="w-52" alt="Movie" />
+            </figure>
+            <div className="card-body">
+              <h2 className="">
+                <span className="font-bold">User Name: </span>
+                {res.name}
+              </h2>
+              <h2 className="">
+                <span className="font-bold">User Email: </span>
+                {res.email}
+              </h2>
+              <h2 className="">
+                <span className="font-bold">User Address: </span>
+                {res.district}, {res.upazilla}
+              </h2>
+              <h2 className="">
+                <span className="font-bold">Blood Group: </span>
+                <div className="badge badge-error gap-2 text-white">
+                  {res.blood}
+                </div>
+              </h2>
+              <button onClick={enableButton} className="btn btn-neutral">
+                edit
+              </button>
             </div>
           </div>
-        </div>
+        ))}
         <div className="w-full ">
           <UpdateProfile
             isDisable={isDisable}
