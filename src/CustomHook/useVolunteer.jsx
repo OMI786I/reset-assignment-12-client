@@ -4,7 +4,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const useVolunteer = () => {
   const { user } = useContext(AuthContext);
-  const email = user?.email; // Ensure user is defined
+  const email = user?.email;
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData", email],
@@ -12,7 +12,7 @@ const useVolunteer = () => {
       fetch(`http://localhost:5000/donor?email=${email}`).then((res) =>
         res.json()
       ),
-    enabled: !!email, // Only run query if email exists
+    enabled: !!email,
   });
 
   if (isLoading) return { isVolunteer: false, isLoading: true };

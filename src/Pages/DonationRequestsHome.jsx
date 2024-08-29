@@ -32,9 +32,7 @@ const DonationRequestsHome = () => {
                 <th>Recipient location</th>
                 <th>Donation Date</th>
                 <th>Donation Time</th>
-
-                <th></th>
-                <th></th>
+                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
@@ -49,6 +47,12 @@ const DonationRequestsHome = () => {
                   </td>
                   <td>{res.donationDate}</td>
                   <td>{res.donationTime}</td>
+
+                  {res.donationStatus === "pending" ? (
+                    <td className="text-red-600">{res.donationStatus}</td>
+                  ) : (
+                    <td className="text-yellow-500 ">{res.donationStatus}</td>
+                  )}
 
                   <td>
                     <Link to={`/donationRequestDetails/${res._id}`}>
