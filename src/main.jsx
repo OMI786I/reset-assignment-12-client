@@ -26,6 +26,8 @@ import ContentManagement from "./Dashboard/ContentManagement.jsx";
 import BlogForm from "./Dashboard/BlogForm.jsx";
 import DonationRequestsHome from "./Pages/DonationRequestsHome.jsx";
 import DonationRequestsDetails from "./Pages/DonationRequestsDetails.jsx";
+import BlogPage from "./Pages/BlogPage.jsx";
+import BlogPageDetails from "./Pages/BlogPageDetails.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -55,6 +57,16 @@ const router = createBrowserRouter([
       {
         path: "/donationRequests",
         element: <DonationRequestsHome></DonationRequestsHome>,
+      },
+      {
+        path: "/blog",
+        element: <BlogPage></BlogPage>,
+      },
+      {
+        path: "/blogDetails/:id",
+        element: <BlogPageDetails></BlogPageDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/blog/${params.id}`),
       },
       {
         path: "/donationRequestDetails/:id",
