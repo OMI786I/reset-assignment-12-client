@@ -5,7 +5,9 @@ const BlogPage = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:5000/blog").then((res) => res.json()),
+      fetch("http://localhost:5000/blog?status=published").then((res) =>
+        res.json()
+      ),
   });
 
   console.log(data);
@@ -43,11 +45,15 @@ const BlogPage = () => {
               </div>
             </figure>
             <div className="card-body p-6">
-              <p className="text-gray-700 text-base leading-relaxed">
-                {res.content.length > 150
-                  ? `${res.content.slice(0, 150)}...`
-                  : res.content}
-              </p>
+              {res.content ? (
+                <p className="text-gray-700 text-base leading-relaxed">
+                  {res.content.length > 150
+                    ? `${res.content.slice(0, 150)}........`
+                    : res.content}
+                </p>
+              ) : (
+                ""
+              )}
             </div>
             <Link to={`/blogDetails/${res._id}`}>
               <button className="btn btn-neutral">Details</button>
