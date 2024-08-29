@@ -24,6 +24,34 @@ const AllUsers = () => {
 
   if (error) return "An error has occurred: " + error.message;
 
+  const handleStatus = (id, status) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, Make  ${status}`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(`http://localhost:5000/donor/admin/${id}`, { status: status })
+          .then((res) => {
+            console.log(res);
+            if (res.data.modifiedCount > 0) {
+              refetch();
+              Swal.fire({
+                title: `Made ${status}!`,
+                text: `User is Successfully made ${status}.`,
+                icon: "success",
+              });
+            } else toast.error("There was an error");
+          });
+      }
+    });
+  };
+
   const handleRole = (id, roleName) => {
     Swal.fire({
       title: "Are you sure?",
@@ -99,9 +127,19 @@ const AllUsers = () => {
                   <th>{res.status}</th>
                   <th>
                     {res.status === "active" ? (
-                      <button className="btn btn-neutral mx-3">Block</button>
+                      <button
+                        className="btn btn-neutral mx-3"
+                        onClick={() => handleStatus(res._id, "blocked")}
+                      >
+                        Block
+                      </button>
                     ) : (
-                      <button className="btn btn-neutral mx-3">Unblock</button>
+                      <button
+                        className="btn btn-neutral mx-3"
+                        onClick={() => handleStatus(res._id, "active")}
+                      >
+                        Unblock
+                      </button>
                     )}
                   </th>
                   <th>
