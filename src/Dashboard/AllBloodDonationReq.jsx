@@ -16,6 +16,27 @@ const AllBloodDonationReq = () => {
   });
   console.log(data);
 
+  const handleStatus = (id, status) => {
+    console.log(id);
+    console.log(status);
+    const submitData = { donationStatus: status };
+
+    axios
+      .patch(`http://localhost:5000/requestDonor/${id}`, submitData)
+      .then((response) => {
+        console.log(response);
+        if (response.data.modifiedCount > 0) {
+          refetch();
+          toast.success("Your data is updated");
+          console.log(response);
+        } else toast.error("already requested");
+      })
+      .catch((error) => {
+        toast.error("There was an error updated the data");
+        console.log(error);
+      });
+  };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -84,7 +105,41 @@ const AllBloodDonationReq = () => {
                   <td>{res.donationDate}</td>
                   <td>{res.donationTime}</td>
                   <td>{res.donationStatus}</td>
-                  <td>donor Information</td>
+                  {res.donationStatus === "pending" ||
+                  res.donationStatus === "cancel" ? (
+                    <td className="text-red-600">{res.donationStatus}</td>
+                  ) : (
+                    <td className="text-yellow-500">{res.donationStatus}</td>
+                  )}
+
+                  {res.donorEmail && res.donorName ? (
+                    <td>
+                      <span className="font-bold">email:</span> {res.donorEmail}
+                      , <br></br> <span className="font-bold">name:</span>{" "}
+                      {res.donorName}
+                      {res.donationStatus === "inprogress" ? (
+                        <div className="flex gap-2">
+                          <button
+                            className="btn btn-success btn-xs"
+                            onClick={() => handleStatus(res._id, "done")}
+                          >
+                            Done
+                          </button>
+                          <button
+                            className="btn btn-error btn-xs"
+                            onClick={() => handleStatus(res._id, "cancel")}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                  ) : (
+                    <td>No Donor</td>
+                  )}
+
                   <td>
                     <Link to={`/dashboard/adminDonationEdit/${res._id}`}>
                       <button className="btn btn-neutral">
