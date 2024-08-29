@@ -5,7 +5,7 @@ import axios from "axios";
 import RecentDonation from "../Component/Dashboard/RecentDonation";
 import AdminCard from "../Component/Dashboard/AdminCard";
 
-const DashboardWelc = ({ isAdmin }) => {
+const DashboardWelc = ({ isAdmin, isVolunteer }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
@@ -74,7 +74,7 @@ const DashboardWelc = ({ isAdmin }) => {
             </div>
           </div>
         </div>
-        {!isAdmin ? (
+        {!isAdmin && !isVolunteer ? (
           <div>
             <RecentDonation></RecentDonation>
           </div>

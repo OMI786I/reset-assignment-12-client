@@ -104,7 +104,9 @@ const Dashboard = () => {
 
       {/* Dashboard content */}
       <div className="flex-1 w-full md:w-[80%] text-xs md:text-[14px] lg:text-lg overflow-y-auto">
-        {isDashboardRoot && <DashboardWelc isAdmin={isAdmin} />}
+        {isDashboardRoot && (
+          <DashboardWelc isAdmin={isAdmin} isVolunteer={isVolunteer} />
+        )}
         <Toaster />
         <Outlet />
       </div>

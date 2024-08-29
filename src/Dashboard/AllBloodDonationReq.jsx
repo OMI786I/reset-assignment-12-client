@@ -135,7 +135,6 @@ const AllBloodDonationReq = () => {
                   </td>
                   <td>{res.donationDate}</td>
                   <td>{res.donationTime}</td>
-                  <td>{res.donationStatus}</td>
                   {res.donationStatus === "pending" ||
                   res.donationStatus === "cancel" ? (
                     <td className="text-red-600">{res.donationStatus}</td>
@@ -171,14 +170,18 @@ const AllBloodDonationReq = () => {
                     <td>No Donor</td>
                   )}
 
-                  <td>
-                    <Link to={`/dashboard/adminDonationEdit/${res._id}`}>
-                      <button className="btn btn-neutral">
-                        <FaFile />
-                        Edit
-                      </button>
-                    </Link>
-                  </td>
+                  {!isVolunteer ? (
+                    <td>
+                      <Link to={`/dashboard/adminDonationEdit/${res._id}`}>
+                        <button className="btn btn-neutral">
+                          <FaFile />
+                          Edit
+                        </button>
+                      </Link>
+                    </td>
+                  ) : (
+                    ""
+                  )}
                   {!isVolunteer ? (
                     <td>
                       <button
