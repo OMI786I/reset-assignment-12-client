@@ -6,13 +6,19 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useVolunteer from "../CustomHook/useVolunteer";
+import { useState } from "react";
 
 const AllBloodDonationReq = () => {
   const { isVolunteer } = useVolunteer();
+
+  const [sortOrder, setSortOrder] = useState("");
+
   const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["repoData", sortOrder],
     queryFn: () =>
-      fetch("http://localhost:5000/requestDonor").then((res) => res.json()),
+      fetch(
+        `http://localhost:5000/requestDonor?donationStatus=${sortOrder}`
+      ).then((res) => res.json()),
   });
   console.log(data);
 
@@ -35,6 +41,11 @@ const AllBloodDonationReq = () => {
         toast.error("There was an error updated the data");
         console.log(error);
       });
+  };
+
+  const handleSort = (order) => {
+    setSortOrder(order);
+    console.log(order);
   };
 
   const handleDelete = (id) => {
@@ -74,6 +85,24 @@ const AllBloodDonationReq = () => {
 
   return (
     <div>
+      <div className="text-center my-4">
+        <label htmlFor="sortOrder" className="font-bold mr-2">
+          FIlter by Status:
+        </label>
+        <select
+          id="sortOrder"
+          value={sortOrder}
+          onChange={(e) => handleSort(e.target.value)}
+          className="border rounded p-2"
+        >
+          <option value="">All</option>
+          <option value="pending">pending</option>
+          <option value="inprogress">inprogress</option>
+          <option value="done">done</option>
+          <option value="cancel">cancel</option>
+        </select>
+      </div>
+
       <h1 className="text-3xl text-center">All Blood Donation Requests</h1>
       <div>
         <div className="overflow-x-auto">
