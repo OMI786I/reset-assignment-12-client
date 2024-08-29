@@ -1,4 +1,5 @@
 import Banner from "../Component/Banner";
+import ContactSection from "../Component/Dashboard/ContactSection";
 import FeaturedSection from "../Component/FeaturedSection";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <Banner></Banner>
       <FeaturedSection></FeaturedSection>
+      <ContactSection></ContactSection>
     </div>
   );
 };
