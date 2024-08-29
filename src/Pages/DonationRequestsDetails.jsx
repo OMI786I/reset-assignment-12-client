@@ -13,6 +13,7 @@ const DonationRequestsDetails = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const onSubmit = (formData) => {
@@ -33,6 +34,12 @@ const DonationRequestsDetails = () => {
         toast.error("There was an error updated the data");
         console.log(error);
       });
+  };
+
+  const openModal = () => {
+    document.getElementById("my_modal_2").showModal();
+    setValue("donorName", donor.name || "");
+    setValue("donorEmail", donor.email || "");
   };
 
   if (donor === "L") {
@@ -119,10 +126,7 @@ const DonationRequestsDetails = () => {
           </div>
         </div>
         {/* Open the modal using document.getElementById('ID').showModal() method */}
-        <button
-          className="btn btn-neutral w-full"
-          onClick={() => document.getElementById("my_modal_2").showModal()}
-        >
+        <button className="btn btn-neutral w-full" onClick={openModal}>
           Donate
         </button>
         <dialog id="my_modal_2" className="modal">
