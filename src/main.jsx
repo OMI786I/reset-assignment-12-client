@@ -24,6 +24,8 @@ import AdminDashboard from "./Dashboard/AdminDashboard.jsx";
 import AdminDonationEdit from "./Dashboard/AdminDonationEdit.jsx";
 import ContentManagement from "./Dashboard/ContentManagement.jsx";
 import BlogForm from "./Dashboard/BlogForm.jsx";
+import DonationRequestsHome from "./Pages/DonationRequestsHome.jsx";
+import DonationRequestsDetails from "./Pages/DonationRequestsDetails.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -49,6 +51,16 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/donationRequests",
+        element: <DonationRequestsHome></DonationRequestsHome>,
+      },
+      {
+        path: "/donationRequestDetails/:id",
+        element: <DonationRequestsDetails></DonationRequestsDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/requestDonor/${params.id}`),
       },
     ],
   },
