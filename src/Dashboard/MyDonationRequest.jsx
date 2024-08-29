@@ -12,8 +12,9 @@ const MyDonationRequest = () => {
   //const [data, setData] = useState([]);
   const { user } = useContext(AuthContext);
 
-  const [sortOrder, setSortOrder] = useState();
+  const [sortOrder, setSortOrder] = useState("");
 
+  console.log(sortOrder);
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -41,11 +42,13 @@ const MyDonationRequest = () => {
   };
 
   const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["repoData", sortOrder],
+    queryKey: ["repoData", user?.email, sortOrder],
     queryFn: () =>
       fetch(
         `http://localhost:5000/requestDonor?requesterEmail=${user.email}&donationStatus=${sortOrder}`
       ).then((res) => res.json()),
+
+    enabled: !!user?.email,
   });
   const handleSort = (order) => {
     setSortOrder(order);

@@ -94,6 +94,16 @@ const CreateDRequest = () => {
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
+  }
+
+  if (data[0].status === "blocked") {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-3xl">
+          You are blocked and can't create Donation Requests
+        </p>
+      </div>
+    );
   } else
     return (
       <div>
