@@ -12,6 +12,8 @@ const MyDonationRequest = () => {
   //const [data, setData] = useState([]);
   const { user } = useContext(AuthContext);
 
+  const [sortOrder, setSortOrder] = useState();
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -39,13 +41,17 @@ const MyDonationRequest = () => {
   };
 
   const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["repoData", sortOrder],
     queryFn: () =>
       fetch(
-        `http://localhost:5000/requestDonor?requesterEmail=${user.email}`
+        `http://localhost:5000/requestDonor?requesterEmail=${user.email}&donationStatus=${sortOrder}`
       ).then((res) => res.json()),
   });
-
+  const handleSort = (order) => {
+    setSortOrder(order);
+    console.log(order);
+  };
+  console.log(data);
   if (isPending)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -93,6 +99,23 @@ const MyDonationRequest = () => {
 
   return (
     <div>
+      <div className="text-center my-4">
+        <label htmlFor="sortOrder" className="font-bold mr-2">
+          FIlter by Status:
+        </label>
+        <select
+          id="sortOrder"
+          value={sortOrder}
+          onChange={(e) => handleSort(e.target.value)}
+          className="border rounded p-2"
+        >
+          <option value="">All</option>
+          <option value="pending">pending</option>
+          <option value="inprogress">inprogress</option>
+          <option value="done">done</option>
+          <option value="cancel">cancel</option>
+        </select>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
