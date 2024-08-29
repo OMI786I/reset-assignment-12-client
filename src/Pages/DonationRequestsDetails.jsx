@@ -1,7 +1,9 @@
 import { useLoaderData } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useDonor from "../CustomHook/useDonor";
 const DonationRequestsDetails = () => {
   const data = useLoaderData();
+  const [donor] = useDonor();
 
   const {
     register,
@@ -9,8 +11,8 @@ const DonationRequestsDetails = () => {
     formState: { errors },
     watch,
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (formData) => {
+    console.log(formData);
   };
 
   return (
@@ -102,37 +104,38 @@ const DonationRequestsDetails = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-4"
           >
-            {/* Example Input */}
+            {/* Donor Name Input */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-black">Example Field</span>
+                <span className="label-text text-black">Donor Name</span>
               </label>
               <input
-                defaultValue="test"
-                {...register("example", { required: true })}
+                {...register("donorName", { required: true })}
                 className={`input input-bordered w-full ${
-                  errors.example ? "input-error" : ""
+                  errors.donorName ? "input-error" : ""
                 }`}
-                placeholder="Enter something..."
+                placeholder="Enter donor name..."
+                value={donor.name}
               />
-              {errors.example && (
+              {errors.donorName && (
                 <span className="text-error mt-1">This field is required</span>
               )}
             </div>
 
-            {/* Example Required Input */}
+            {/* Donor Email Input */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-black">Required Field</span>
+                <span className="label-text text-black">Donor Email</span>
               </label>
               <input
-                {...register("exampleRequired", { required: true })}
+                {...register("donorEmail", { required: true })}
                 className={`input input-bordered w-full ${
-                  errors.exampleRequired ? "input-error" : ""
+                  errors.donorEmail ? "input-error" : ""
                 }`}
-                placeholder="This is required..."
+                placeholder="Enter donor email..."
+                value={donor.email}
               />
-              {errors.exampleRequired && (
+              {errors.donorEmail && (
                 <span className="text-error mt-1">This field is required</span>
               )}
             </div>

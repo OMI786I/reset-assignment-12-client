@@ -1,0 +1,23 @@
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+
+const useDonor = () => {
+  const { user } = useContext(AuthContext);
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch(`http://localhost:5000/donor?email=${user.email}`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
+  return data;
+};
+
+export default useDonor;
