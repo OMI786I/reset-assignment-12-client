@@ -36,6 +36,12 @@ const AdminCard = () => {
         setLoading(false);
       });
   }, []);
+
+  const filterData = data2.filter((res) => res.donation);
+  const Addition = filterData.map((res) => res.donation);
+  const totalDonations = Addition.reduce((sum, donation) => sum + donation, 0);
+  console.log(totalDonations);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -62,7 +68,7 @@ const AdminCard = () => {
               <GrMoney />
               Total Funding
             </h2>
-            <p className="text-4xl font-bold">$45,678</p>
+            <p className="text-4xl font-bold">${totalDonations}</p>
             <p>Raised to support blood donation drives.</p>
           </div>
         </div>
