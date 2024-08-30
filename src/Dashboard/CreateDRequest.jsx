@@ -46,7 +46,10 @@ const CreateDRequest = () => {
     console.log(submitData);
 
     axios
-      .post("http://localhost:5000/requestDonor", submitData)
+      .post(
+        "https://b9a12-server-side-omi-786-i.vercel.app/requestDonor",
+        submitData
+      )
       .then((response) => {
         if (response.data.insertedId) {
           toast.success("You have successfully added");
@@ -69,7 +72,9 @@ const CreateDRequest = () => {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/donor?email=${user.email}`)
+      .get(
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor?email=${user.email}`
+      )
       .then((assignment) => {
         setData(assignment.data);
         setLoading(false);

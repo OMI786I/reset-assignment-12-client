@@ -18,7 +18,7 @@ const SearchResult = ({ searchData }) => {
 
     axios
       .get(
-        `http://localhost:5000/donor?district=${district}&upazilla=${upazilla}&blood=${blood}`
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor?district=${district}&upazilla=${upazilla}&blood=${blood}`
       )
       .then((res) => {
         setData(res.data);

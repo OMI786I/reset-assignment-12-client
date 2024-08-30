@@ -13,9 +13,9 @@ const ContentManagement = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["repoData", sortOrder],
     queryFn: () =>
-      fetch(`http://localhost:5000/blog?status=${sortOrder}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://b9a12-server-side-omi-786-i.vercel.app/blog?status=${sortOrder}`
+      ).then((res) => res.json()),
   });
   console.log(data);
 
@@ -35,17 +35,19 @@ const ContentManagement = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/blog/${id}`).then((res) => {
-          console.log(res);
-          if (res.data.deletedCount > 0) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-            refetch();
-          } else toast.error("There was an error");
-        });
+        axios
+          .delete(`https://b9a12-server-side-omi-786-i.vercel.app/blog/${id}`)
+          .then((res) => {
+            console.log(res);
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              refetch();
+            } else toast.error("There was an error");
+          });
       }
     });
   };
@@ -54,7 +56,9 @@ const ContentManagement = () => {
 
     //update operation
     axios
-      .patch(`http://localhost:5000/blog/${id}`, { status: change })
+      .patch(`https://b9a12-server-side-omi-786-i.vercel.app/blog/${id}`, {
+        status: change,
+      })
       .then((response) => {
         refetch();
         if (response.data.modifiedCount > 0) {

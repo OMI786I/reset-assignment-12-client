@@ -85,7 +85,9 @@ const router = createBrowserRouter([
         path: "/blogDetails/:id",
         element: <BlogPageDetails></BlogPageDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/blog/${params.id}`),
+          fetch(
+            `https://b9a12-server-side-omi-786-i.vercel.app/blog/${params.id}`
+          ),
       },
       {
         path: "/donationRequestDetails/:id",
@@ -95,7 +97,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/requestDonor/${params.id}`),
+          fetch(
+            `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${params.id}`
+          ),
       },
     ],
   },
@@ -143,19 +147,25 @@ const router = createBrowserRouter([
         path: "myDonationEdit/:id",
         element: <MyDonationEdit></MyDonationEdit>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/requestDonor/${params.id}`),
+          fetch(
+            `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${params.id}`
+          ),
       },
       {
         path: "adminDonationEdit/:id",
         element: <AdminDonationEdit></AdminDonationEdit>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/requestDonor/${params.id}`),
+          fetch(
+            `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${params.id}`
+          ),
       },
       {
         path: "myDonationDetails/:id",
         element: <MyDonationDetails></MyDonationDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/requestDonor/${params.id}`),
+          fetch(
+            `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${params.id}`
+          ),
       },
     ],
   },

@@ -16,7 +16,7 @@ const BlogForm = () => {
     const status = "draft";
     const submitData = { ...data, status };
     axios
-      .post("http://localhost:5000/blog", submitData)
+      .post("https://b9a12-server-side-omi-786-i.vercel.app/blog", submitData)
       .then((response) => {
         if (response.data.insertedId) {
           toast.success("You have successfully added");

@@ -16,7 +16,9 @@ const DashboardWelc = ({ isAdmin, isVolunteer }) => {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/donor?email=${user.email}`)
+      .get(
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor?email=${user.email}`
+      )
       .then((assignment) => {
         setData(assignment.data);
         setLoading(false);

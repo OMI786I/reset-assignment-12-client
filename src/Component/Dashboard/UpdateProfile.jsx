@@ -44,7 +44,10 @@ const UpdateProfile = ({ data, onUpdate, isDisable, setIsDisable }) => {
     const submitData = { ...data, district };
     console.log(submitData);
     axios
-      .put(`http://localhost:5000/donor/${_id}`, submitData)
+      .put(
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor/${_id}`,
+        submitData
+      )
       .then((response) => {
         setLoading(false);
         if (response.data.modifiedCount > 0) {

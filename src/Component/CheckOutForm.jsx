@@ -8,10 +8,14 @@ const CheckOutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
   const totalPrice = 500;
   useEffect(() => {
-    axios.post("http://localhost:5000/create-payment-intent").then((res) => {
-      console.log(res.data.clientSecret);
-      setClientSecret(res.data.clientSecret);
-    });
+    axios
+      .post(
+        "https://b9a12-server-side-omi-786-i.vercel.app/create-payment-intent"
+      )
+      .then((res) => {
+        console.log(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      });
   }, []);
 
   const handleSubmit = async (e) => {

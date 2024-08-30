@@ -36,7 +36,10 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .patch(`http://localhost:5000/donor/admin/${id}`, { status: status })
+          .patch(
+            `https://b9a12-server-side-omi-786-i.vercel.app/donor/admin/${id}`,
+            { status: status }
+          )
           .then((res) => {
             console.log(res);
             if (res.data.modifiedCount > 0) {
@@ -64,7 +67,10 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(`http://localhost:5000/donor/admin/${id}`, { role: roleName })
+          .put(
+            `https://b9a12-server-side-omi-786-i.vercel.app/donor/admin/${id}`,
+            { role: roleName }
+          )
           .then((res) => {
             console.log(res);
             if (res.data.modifiedCount > 0) {

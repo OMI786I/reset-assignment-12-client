@@ -12,7 +12,7 @@ const AdminCard = () => {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/requestDonor`)
+      .get(`https://b9a12-server-side-omi-786-i.vercel.app/requestDonor`)
       .then((assignment) => {
         setData(assignment.data);
         setLoading(false);
@@ -26,7 +26,7 @@ const AdminCard = () => {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/donor`)
+      .get(`https://b9a12-server-side-omi-786-i.vercel.app/donor`)
       .then((assignment) => {
         setData2(assignment.data);
         setLoading(false);

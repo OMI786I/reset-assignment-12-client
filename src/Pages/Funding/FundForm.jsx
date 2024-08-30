@@ -20,9 +20,9 @@ const FundForm = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch(`http://localhost:5000/donor?email=${user.email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor?email=${user.email}`
+      ).then((res) => res.json()),
   });
 
   console.log(data);
@@ -37,7 +37,10 @@ const FundForm = () => {
     const submitData = { ...data2, donation, date };
     console.log(submitData);
     axios
-      .patch(`http://localhost:5000/donor/${data[0]._id}`, submitData)
+      .patch(
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor/${data[0]._id}`,
+        submitData
+      )
       .then((response) => {
         if (response.data.modifiedCount > 0) {
           toast.success("You have successfully updated");

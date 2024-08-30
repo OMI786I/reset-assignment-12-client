@@ -19,7 +19,10 @@ const DonationRequestsDetails = () => {
     const donationStatus = "inprogress";
     const submitData = { ...formData, donationStatus };
     axios
-      .patch(`http://localhost:5000/requestDonor/${data._id}`, submitData)
+      .patch(
+        `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${data._id}`,
+        submitData
+      )
       .then((response) => {
         console.log(response);
         if (response.data.modifiedCount > 0) {

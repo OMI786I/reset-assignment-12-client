@@ -48,7 +48,10 @@ const AdminDonationEdit = () => {
     console.log(district);
     const submitData = { ...data, district };
     axios
-      .put(`http://localhost:5000/requestDonor/${getData._id}`, submitData)
+      .put(
+        `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${getData._id}`,
+        submitData
+      )
       .then((response) => {
         setLoading(false);
         console.log(response);

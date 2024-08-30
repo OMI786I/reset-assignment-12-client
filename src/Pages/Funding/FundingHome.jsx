@@ -5,7 +5,9 @@ const FundingHome = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:5000/donor").then((res) => res.json()),
+      fetch("https://b9a12-server-side-omi-786-i.vercel.app/donor").then(
+        (res) => res.json()
+      ),
   });
 
   if (isLoading) return "Loading...";

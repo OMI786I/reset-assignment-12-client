@@ -66,7 +66,10 @@ const Registration = () => {
         navigate(location?.state ? location.state : "/");
         console.log(result);
         axios
-          .post("http://localhost:5000/donor", submitData)
+          .post(
+            "https://b9a12-server-side-omi-786-i.vercel.app/donor",
+            submitData
+          )
           .then((response) => {
             if (response.data.insertedId) {
               toast.success("Your data is added to database");

@@ -17,7 +17,7 @@ const RecentDonation = () => {
 
   //   axios
   //     .get(
-  //       `http://localhost:5000/requestDonor?requesterEmail=${user.email}&limit=3`
+  //       `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor?requesterEmail=${user.email}&limit=3`
   //     )
   //     .then((assignment) => {
   //       setData(assignment.data);
@@ -33,7 +33,7 @@ const RecentDonation = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       fetch(
-        `http://localhost:5000/requestDonor?requesterEmail=${user.email}&limit=3`
+        `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor?requesterEmail=${user.email}&limit=3`
       ).then((res) => res.json()),
   });
 
@@ -50,17 +50,21 @@ const RecentDonation = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/requestDonor/${id}`).then((res) => {
-          console.log(res);
-          if (res.data.deletedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-          } else toast.error("There was an error");
-        });
+        axios
+          .delete(
+            `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${id}`
+          )
+          .then((res) => {
+            console.log(res);
+            if (res.data.deletedCount > 0) {
+              refetch();
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            } else toast.error("There was an error");
+          });
       }
     });
   };
@@ -70,7 +74,10 @@ const RecentDonation = () => {
     const submitData = { donationStatus: status };
 
     axios
-      .patch(`http://localhost:5000/requestDonor/${id}`, submitData)
+      .patch(
+        `https://b9a12-server-side-omi-786-i.vercel.app/requestDonor/${id}`,
+        submitData
+      )
       .then((response) => {
         console.log(response);
         if (response.data.modifiedCount > 0) {

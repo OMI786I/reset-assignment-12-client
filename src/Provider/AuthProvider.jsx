@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         const userInfo = { email: currentUser.email };
         axios
-          .post("http://localhost:5000/jwt", userInfo)
+          .post("https://b9a12-server-side-omi-786-i.vercel.app/jwt", userInfo)
           .then((response) => {
             if (response.data.token) {
               localStorage.setItem("access-token", response.data.token);

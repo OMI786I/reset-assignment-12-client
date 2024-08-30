@@ -6,7 +6,9 @@ const DonationRequestsHome = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:5000/requestDonor").then((res) => res.json()),
+      fetch("https://b9a12-server-side-omi-786-i.vercel.app/requestDonor").then(
+        (res) => res.json()
+      ),
   });
   console.log(data);
   if (isPending)

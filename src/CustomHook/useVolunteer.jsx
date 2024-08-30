@@ -9,9 +9,9 @@ const useVolunteer = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData", email],
     queryFn: () =>
-      fetch(`http://localhost:5000/donor?email=${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://b9a12-server-side-omi-786-i.vercel.app/donor?email=${email}`
+      ).then((res) => res.json()),
     enabled: !!email,
   });
 
