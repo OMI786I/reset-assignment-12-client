@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.4.0",
     "@tanstack/react-query": "^5.52.2",
     "axios": "^1.7.5",
     "firebase": "^10.13.0",

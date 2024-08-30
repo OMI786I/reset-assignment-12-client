@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 
 import "./index.css";
@@ -65,7 +65,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/fund",
-        element: <Fund></Fund>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Fund></Fund>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blogDetails/:id",
