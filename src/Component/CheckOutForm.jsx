@@ -1,8 +1,18 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const CheckOutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [clientSecret, setClientSecret] = useState("");
+  const totalPrice = 500;
+  useEffect(() => {
+    axios.post("http://localhost:5000/create-payment-intent").then((res) => {
+      console.log(res.data.clientSecret);
+      setClientSecret(res.data.clientSecret);
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +55,11 @@ const CheckOutForm = () => {
             },
           }}
         />
-        <button className="btn btn-neutral" type="submit" disabled={!stripe}>
+        <button
+          className="btn btn-neutral"
+          type="submit"
+          disabled={!stripe || !clientSecret}
+        >
           Pay
         </button>
       </form>

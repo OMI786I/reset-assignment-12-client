@@ -29,6 +29,8 @@ import DonationRequestsDetails from "./Pages/DonationRequestsDetails.jsx";
 import BlogPage from "./Pages/BlogPage.jsx";
 import BlogPageDetails from "./Pages/BlogPageDetails.jsx";
 import Fund from "./Pages/Fund.jsx";
+import FundingHome from "./Pages/Funding/FundingHome.jsx";
+import FundForm from "./Pages/Funding/FundForm.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -67,8 +69,15 @@ const router = createBrowserRouter([
         path: "/fund",
         element: (
           <PrivateRoute>
-            {" "}
-            <Fund></Fund>
+            <FundingHome></FundingHome>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/fundForm",
+        element: (
+          <PrivateRoute>
+            <FundForm></FundForm>
           </PrivateRoute>
         ),
       },
