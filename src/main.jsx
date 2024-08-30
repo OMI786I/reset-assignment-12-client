@@ -28,6 +28,7 @@ import DonationRequestsHome from "./Pages/DonationRequestsHome.jsx";
 import DonationRequestsDetails from "./Pages/DonationRequestsDetails.jsx";
 import BlogPage from "./Pages/BlogPage.jsx";
 import BlogPageDetails from "./Pages/BlogPageDetails.jsx";
+import Fund from "./Pages/Fund.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <BlogPage></BlogPage>,
+      },
+      {
+        path: "/fund",
+        element: <Fund></Fund>,
       },
       {
         path: "/blogDetails/:id",

@@ -46,7 +46,7 @@ const Navbar = () => {
           Blog
         </button>
       </NavLink>
-      <NavLink to="/funding">
+      <NavLink to="/fund">
         <button className="hover:border-red-500 border-transparent  duration-150 hover:text-red-500 font-bold p-2  focus:border-red-500 focus:text-red-500">
           Funding
         </button>
