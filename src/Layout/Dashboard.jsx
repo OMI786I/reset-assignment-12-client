@@ -56,7 +56,15 @@ const Dashboard = () => {
               ) : (
                 ""
               )}
-
+              <li>
+                <NavLink
+                  to={"/dashboard/profile"}
+                  className="flex items-center"
+                >
+                  <FaHome className="mr-2" />
+                  Profile
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to={"/dashboard/all-blood-donation-requests"}
@@ -149,7 +157,15 @@ const Dashboard = () => {
                   ) : (
                     ""
                   )}
-
+                  <li>
+                    <NavLink
+                      to={"/dashboard/profile"}
+                      className="flex items-center"
+                    >
+                      <FaHome className="mr-2" />
+                      Profile
+                    </NavLink>
+                  </li>
                   <li>
                     <NavLink
                       to={"/dashboard/all-blood-donation-requests"}
